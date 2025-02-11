@@ -49,14 +49,14 @@ const SplashScreen = ({navigation}) => {
       <View style={styles.logoContainer}>
         <Animated.View style={[styles.logoWrapper, {opacity: fadeAnim1}]}>
           <Image
-            source={require('../assets/logo-ko.png')}
+            source={require('../../assets/logo-ko.png')}
             style={styles.logo}
             resizeMode="contain"
           />
         </Animated.View>
         <Animated.View style={[styles.logoWrapper, {opacity: fadeAnim2}]}>
           <Image
-            source={require('../assets/logo-en.png')}
+            source={require('../../assets/logo-en.png')}
             style={styles.logo}
             resizeMode="contain"
           />
@@ -66,7 +66,7 @@ const SplashScreen = ({navigation}) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.startButton}
-          onPress={() => navigation.navigate('Login')}>
+          onPress={() => navigation.navigate('MainTab')}>
           <Text style={styles.startButtonText}>시작하기</Text>
         </TouchableOpacity>
 
