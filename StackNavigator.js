@@ -9,6 +9,7 @@ import FindIdScreen from './screens/FindIdScreen';
 import FindPasswordScreen from './screens/FindPasswordScreen';
 import SplashScreen from './src/screens/SplashScreen';
 import MainTab from './src/navigation/MainTab';
+import StockTradeScreen from './src/screens/StockTradeScreen';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ export default function StackNavigator() {
       <Stack.Screen name="Splash" component={SplashScreen}/>
       <Stack.Screen name="Login" component={LoginScreen}/>
       <Stack.Screen name="MainTab" component={MainTab}/>
+      <Stack.Screen name="StockTrade" component={StockTradeScreen}/>
       <Stack.Screen name="SignUp" component={SignUpScreen}/>
       <Stack.Screen name="SignUp2" component={SignUp2Screen}/>
       <Stack.Screen name="SignUp3" component={SignUp3Screen}/>

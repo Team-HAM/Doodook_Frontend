@@ -80,6 +80,7 @@ const MainScreen = ({navigation}) => {
         <Text style={styles.tradeButtonText}>주식 거래하기 📈</Text>
       </TouchableOpacity>
 
+
       <View style={styles.watchlistContainer}>
         <Text style={styles.watchlistTitle}>나의 관심 주식</Text>
         <ScrollView>
