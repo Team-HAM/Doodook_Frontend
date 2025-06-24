@@ -8,6 +8,7 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
+import { API_BASE_URL } from "../../utils/apiConfig";
 
 const ResetPasswordScreen = ({ route, navigation }) => {
   // route.params가 없는 경우 처리
@@ -39,7 +40,7 @@ const ResetPasswordScreen = ({ route, navigation }) => {
     setLoading(true);
     try {
       const response = await fetch(
-        "http://43.200.211.76:8000/users/password_reset/confirm/",
+        `${API_BASE_URL}users/password_reset/confirm/`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

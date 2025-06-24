@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { getNewAccessToken } from "../../utils/token";
 import { fetchUserInfo } from "../../utils/user";
+import { API_BASE_URL } from "../../utils/apiConfig";
 //import { fetchPortfolio } from '../utils/portfolio';
 
 const TradingBuyScreen = ({ route, navigation }) => {
@@ -62,7 +63,7 @@ const TradingBuyScreen = ({ route, navigation }) => {
         price: parsedPrice,
       };
 
-      const response = await fetch("http://43.200.211.76:8000/trading/trade/", {
+      const response = await fetch(`${API_BASE_URL}trading/trade/`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,

@@ -10,6 +10,7 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
+import { API_BASE_URL } from "../../utils/apiConfig";
 
 // ✅ 현재 기기의 높이 가져오기
 const { height } = Dimensions.get("window");
@@ -60,7 +61,7 @@ const SignUp2Screen = ({ navigation }) => {
     }
 
     try {
-      const response = await fetch("http://43.200.211.76:8000/users/", {
+      const response = await fetch(`${API_BASE_URL}users/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

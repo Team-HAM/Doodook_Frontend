@@ -1,8 +1,10 @@
 // utils/change.js
 
+import { API_BASE_URL } from "./apiConfig";
+
 export const fetchPriceChange = async (stock_code) => {
   try {
-    const url = `http://43.200.211.76:8000/stocks/price_change/?stock_code=${stock_code}`;
+    const url = `${API_BASE_URL}stocks/price_change/?stock_code=${stock_code}`;
 
     const response = await fetch(url, {
       method: "GET",

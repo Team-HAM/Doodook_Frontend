@@ -1,4 +1,6 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getNewAccessToken } from "./token";
+import { API_BASE_URL } from "./apiConfig";
 
 // 사용자 정보를 불러와 setUserInfo에 설정해주는 함수
 export const fetchUserInfo = async (navigation, setUserInfo) => {
@@ -11,7 +13,7 @@ export const fetchUserInfo = async (navigation, setUserInfo) => {
 
     console.log("사용 중인 액세스 토큰:", accessToken);
 
-    const response = await fetch("http://43.200.211.76:8000/users/me/", {
+    const response = await fetch(`${API_BASE_URL}users/me/`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
@@ -55,7 +57,7 @@ export const updateUserInfo = async (navigation, updatedFields) => {
 
     console.log("🔧 수정 요청 보낼 필드:", updatedFields);
 
-    const response = await fetch("http://43.200.211.76:8000/users/me/", {
+    const response = await fetch(`${API_BASE_URL}users/me/`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${accessToken}`,

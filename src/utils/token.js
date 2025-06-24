@@ -1,6 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const tokenUrl = "http://43.200.211.76:8000/api/token/";
+import { API_BASE_URL } from "./apiConfig";
 
 //토큰 생성 api
 export const getNewAccessToken = async (navigation) => {
@@ -15,7 +14,7 @@ export const getNewAccessToken = async (navigation) => {
     }
 
     console.log("🔄 Access Token 요청 중...");
-    const response = await fetch(tokenUrl, {
+    const response = await fetch(`${API_BASE_URL}api/token/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),

@@ -1,4 +1,6 @@
 import { getNewAccessToken } from "./token";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { API_BASE_URL } from "./apiConfig";
 
 // ✅ 사용자의 MBTI 유형을 가져오는 함수
 export const fetchUserMbtiType = async (navigation, setMbtiType) => {
@@ -9,7 +11,7 @@ export const fetchUserMbtiType = async (navigation, setMbtiType) => {
       return;
     }
 
-    const response = await fetch("http://43.200.211.76:8000/mbti/result/detail/", {
+    const response = await fetch(`${API_BASE_URL}mbti/result/detail/`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",

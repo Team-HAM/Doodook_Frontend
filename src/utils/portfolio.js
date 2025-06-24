@@ -1,4 +1,6 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getNewAccessToken } from "./token";
+import { API_BASE_URL } from "./apiConfig";
 // import { fetchUserInfo } from "./user";
 
 export const fetchPortfolio = async (
@@ -30,7 +32,7 @@ export const fetchPortfolio = async (
     //   return;
     // }
 
-    const url = `http://43.200.211.76:8000/trading/portfolio/`;
+    const url = `${API_BASE_URL}trading/portfolio/`;
     console.log("📡 요청 URL:", url);
 
     const response = await fetch(url, {

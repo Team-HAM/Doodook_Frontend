@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import Markdown from "react-native-markdown-display";
+import { API_BASE_URL } from "../../utils/apiConfig";
 
 const StudyScreen = () => {
   const route = useRoute();
@@ -27,7 +28,7 @@ const StudyScreen = () => {
     const fetchGuide = async () => {
       try {
         const res = await fetch(
-          `http://43.200.211.76:8000/api/guides/${guideId}/`
+          `${API_BASE_URL}api/guides/${guideId}/`
         );
         const data = await res.json();
         console.log("[content]", data.content); // 🔍 확인용

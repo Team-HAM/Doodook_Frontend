@@ -7,6 +7,7 @@ import {
   Alert,
   StyleSheet,
 } from "react-native";
+import { API_BASE_URL } from "../../utils/apiConfig";
 
 const FindPasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -21,7 +22,7 @@ const FindPasswordScreen = ({ navigation }) => {
     setLoading(true);
     try {
       const response = await fetch(
-        "http://43.200.211.76:8000/users/password_reset/request/",
+        `${API_BASE_URL}users/password_reset/request/`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

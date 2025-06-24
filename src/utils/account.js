@@ -1,4 +1,6 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getNewAccessToken } from "./token";
+import { API_BASE_URL } from "./apiConfig";
 
 // 사용자 잔고를 불러와 setBalance에 설정해주는 함수
 export const fetchUserBalance = async (navigation, setBalance) => {
@@ -11,7 +13,7 @@ export const fetchUserBalance = async (navigation, setBalance) => {
 
     console.log("사용 중인 액세스 토큰:", accessToken);
 
-    const response = await fetch("http://43.200.211.76:8000/users/account/", {
+    const response = await fetch(`${API_BASE_URL}users/account/`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",

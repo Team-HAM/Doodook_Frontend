@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { API_BASE_URL } from "../utils/apiConfig";
 
 const RecommendedStock = ({ stockCode, navigation, styles }) => {
   const [price, setPrice] = useState(null);
@@ -10,7 +11,7 @@ const RecommendedStock = ({ stockCode, navigation, styles }) => {
     const fetchPrice = async () => {
       try {
         const res = await fetch(
-          `http://43.200.211.76:8000/stocks/price_change/?stock_code=${stockCode}`
+          `${API_BASE_URL}stocks/price_change/?stock_code=${stockCode}`
         );
         const data = await res.json();
         if (data.status === "success") {
@@ -33,9 +34,9 @@ const RecommendedStock = ({ stockCode, navigation, styles }) => {
   const stockNameMap = {
     "005930": "삼성전자",
     352820: "하이브",
-    "035720": "카카오",
-    "068270": "셀트리온",
-    "051910": "LG화학",
+    // "035720": "카카오",
+    // "068270": "셀트리온",
+    // "051910": "LG화학",
   };
 
   const stock = {

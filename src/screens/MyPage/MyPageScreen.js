@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
+import { API_BASE_URL } from "../../utils/apiConfig";
 
 import { getNewAccessToken } from "../../utils/token";
 import { fetchUserInfo } from "../../utils/user";
@@ -75,7 +76,7 @@ useEffect(() => {
       return;
     }
 
-    const response = await fetch("http://43.200.211.76:8000/logout/", {
+    const response = await fetch(`${API_BASE_URL}logout/`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -120,7 +121,7 @@ useEffect(() => {
               }
 
               const response = await fetch(
-                "http://43.200.211.76:8000/users/delete/",
+                `${API_BASE_URL}users/delete/`,
                 {
                   method: "DELETE",
                   headers: {

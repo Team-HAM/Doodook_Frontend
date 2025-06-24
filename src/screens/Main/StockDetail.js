@@ -12,6 +12,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { LineChart } from "react-native-chart-kit";
+import { API_BASE_URL } from "../../utils/apiConfig";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -38,7 +39,7 @@ const StockDetail = ({ route, navigation }) => {
 
         // 1. 기존 토큰 삭제
         await fetch(
-          "http://43.200.211.76:8000/trade_hantu/destroy_access_token/",
+          `${API_BASE_URL}trade_hantu/destroy_access_token/`,
           {
             method: "POST",
           }
@@ -46,7 +47,7 @@ const StockDetail = ({ route, navigation }) => {
 
         // 2. 새 토큰 생성
         await fetch(
-          "http://43.200.211.76:8000/trade_hantu/issue_access_token/",
+          `${API_BASE_URL}trade_hantu/issue_access_token/`,
           {
             method: "POST",
           }
@@ -54,13 +55,13 @@ const StockDetail = ({ route, navigation }) => {
 
         // 3. 현재가 조회
         const priceResponse = await fetch(
-          `http://43.200.211.76:8000/trading/stock_price/?stock_code=${symbol}`
+          `${API_BASE_URL}trading/stock_price/?stock_code=${symbol}`
         );
         const priceData = await priceResponse.json();
 
         // 4. 전일대비 변동 정보 조회
         const changeResponse = await fetch(
-          `http://43.200.211.76:8000/stocks/price_change/?stock_code=${symbol}`
+          `${API_BASE_URL}stocks/price_change/?stock_code=${symbol}`
         );
         const changeData = await changeResponse.json();
 
@@ -170,7 +171,7 @@ const StockDetail = ({ route, navigation }) => {
       );
 
       const response = await fetch(
-        `http://43.200.211.76:8000/stocks/daily_stock_price/?stock_code=${symbol}&start_date=${startDateStr}&end_date=${endDateStr}`
+        `${API_BASE_URL}stocks/daily_stock_price/?stock_code=${symbol}&start_date=${startDateStr}&end_date=${endDateStr}`
       );
 
       const data = await response.json();

@@ -14,6 +14,7 @@ import { fetchUserInfo } from "../../utils/user";
 import { getNewAccessToken } from "../../utils/token";
 import { fetchPortfolio } from "../../utils/portfolio";
 import RecommendedStock from "../../components/RecommendedStock";
+import { API_BASE_URL } from "../../utils/apiConfig";
 
 const StockTradeScreen = ({ navigation }) => {
   console.log("📌 StockTradeScreen 렌더링");
@@ -28,7 +29,7 @@ const StockTradeScreen = ({ navigation }) => {
     if (!query) return;
 
     try {
-      const url = `http://43.200.211.76:8000/api/stock/search/?query=${encodeURIComponent(
+      const url = `${API_BASE_URL}api/stock/search/?query=${encodeURIComponent(
         query
       )}`;
       console.log("🔍 검색어:", query);

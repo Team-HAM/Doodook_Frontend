@@ -1,7 +1,9 @@
 // utils/fetchChatbotReply.js
+import { API_BASE_URL } from "./apiConfig";
+
 export const chatbotReply = async (message) => {
   try {
-    const response = await fetch("http://43.200.211.76:8000/api/v1/ai-chatbot/chat/", {
+    const response = await fetch(`${API_BASE_URL}api/v1/ai-chatbot/chat/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

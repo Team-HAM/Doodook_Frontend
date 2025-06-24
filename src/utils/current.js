@@ -1,7 +1,9 @@
+import { API_BASE_URL } from "./apiConfig";
+
 //   const fetchRealTimePrice = async () => {
 //     try {
 //       const accessToken = await getNewAccessToken(navigation);
-//       const url = `http://43.200.211.76:8000/trading/stock_price/?stock_code=${stockInfo.symbol}`;
+//       const url = `${API_BASE_URL}trading/stock_price/?stock_code=${stockInfo.symbol}`;
 //       const response = await fetch(url, {
 //         method: "GET",
 //         headers: {

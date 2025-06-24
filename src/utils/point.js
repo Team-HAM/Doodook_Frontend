@@ -1,4 +1,6 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getNewAccessToken } from "./token";
+import { API_BASE_URL } from "./apiConfig";
 
 export const increaseBalance = async (navigation, amount) => {
   try {
@@ -8,7 +10,7 @@ export const increaseBalance = async (navigation, amount) => {
       return;
     }
 
-    const response = await fetch("http://43.200.211.76:8000/point/increase_balance/", {
+    const response = await fetch(`${API_BASE_URL}point/increase_balance/`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,

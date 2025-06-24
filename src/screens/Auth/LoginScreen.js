@@ -6,10 +6,12 @@ import {
   View,
   TouchableOpacity,
   Alert,
+  Image,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import EyeOpen from "../../components/EyeOpen";
 import EyeClosed from "../../components/EyeClosed";
+import { API_BASE_URL } from "../../utils/apiConfig";
 
 const LoginScreen = ({ navigation }) => {
   const [seePassword, setSeePassword] = useState(true);
@@ -28,7 +30,7 @@ const LoginScreen = ({ navigation }) => {
     try {
       console.log("로그인 시도:", { email, password: "***" });
 
-      const response = await fetch("http://43.200.211.76:8000/api/token/", {
+      const response = await fetch(`${API_BASE_URL}api/token/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

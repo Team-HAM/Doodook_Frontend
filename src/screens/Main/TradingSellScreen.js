@@ -14,6 +14,7 @@ import {
 import { getNewAccessToken } from "../../utils/token";
 import { fetchUserInfo } from "../../utils/user";
 import { fetchPortfolio } from "../../utils/portfolio";
+import { API_BASE_URL } from "../../utils/apiConfig";
 
 const TradingSellScreen = ({ route, navigation }) => {
   const stock = route.params?.stock;
@@ -69,7 +70,7 @@ const TradingSellScreen = ({ route, navigation }) => {
         price: parsedPrice,
       };
 
-      const response = await fetch("http://43.200.211.76:8000/trading/trade/", {
+      const response = await fetch(`${API_BASE_URL}trading/trade/`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,
