@@ -15,17 +15,19 @@ const RecommendedStock = ({ stockCode, navigation, styles }) => {
         );
         const data = await res.json();
         if (data.status === "success") {
-          console.log("📦 응답 데이터:", data); // ← 전체 응답 확인
+          console.log("📦 추천주식 응답 데이터:", data);
           setPrice(data.current_price);
 
           const percentage = parseFloat(data.price_change_percentage);
-          console.log("🔍 퍼센트 원본:", data.price_change_percentage);
-          console.log("🔍 변환된 퍼센트:", percentage);
-          setPriceChangePercentage(isNaN(percentage) ? null : percentage); // ✅ NaN 방지
+          console.log("🔍 추천주식 퍼센트 원본:", data.price_change_percentage);
+          console.log("🔍 추천주식 변환된 퍼센트:", percentage);
+          setPriceChangePercentage(isNaN(percentage) ? 0 : percentage);
           setChangeStatus(data.change_status);
         }
       } catch (e) {
-        console.error("📉 가격 불러오기 실패:", stockCode, e);
+        console.error("📉 추천주식 가격 불러오기 실패:", stockCode, e);
+        setPriceChangePercentage(0);
+        setChangeStatus("same");
       }
     };
     fetchPrice();
@@ -34,25 +36,73 @@ const RecommendedStock = ({ stockCode, navigation, styles }) => {
   const stockNameMap = {
     "005930": "삼성전자",
     352820: "하이브",
-    // "035720": "카카오",
-    // "068270": "셀트리온",
-    // "051910": "LG화학",
+    // 필요시 추가
   };
 
-  const stock = {
-    id: `recommend-${stockCode}`,
-    name: stockNameMap[stockCode],
-    price: price ? `${price.toLocaleString()}원` : "-",
-    symbol: stockCode,
+  // 🔧 매수/매도용 stock 객체 - 종목코드를 우선 사용
+  const createStockObject = () => {
+    return {
+      id: `recommend-${stockCode}`,
+      name: stockNameMap[stockCode] || `종목${stockCode}`,
+      displayName: stockNameMap[stockCode] || `종목${stockCode}`, // 화면 표시용
+      price: price ? price.toString() : "0",
+      change:
+        priceChangePercentage !== null ? priceChangePercentage.toString() : "0",
+      symbol: stockCode.toString(),
+      quantity: 0,
+      // 🔧 API 요청시 사용할 식별자 (종목코드 우선)
+      stock_symbol: stockCode.toString(), // API에는 종목코드 전달
+      _source: "recommended",
+      _rawPrice: price,
+      _rawChange: priceChangePercentage,
+      _changeStatus: changeStatus,
+    };
+  };
+
+  const stock = createStockObject();
+
+  // 🔧 매수 버튼 클릭 핸들러
+  const handleBuyPress = () => {
+    console.log("🛒 추천 주식 매수 버튼 클릭됨");
+    console.log("📊 전달할 stock 데이터:", stock);
+    console.log("🔍 API에 전달될 stock_symbol:", stock.stock_symbol);
+    console.log("🔍 stockCode 원본:", stockCode);
+
+    // 🔧 데이터 유효성 검사
+    if (!stock.name || !stock.price || stock.price === "0") {
+      console.error("❌ 추천 주식 데이터 불완전:", stock);
+      alert("주식 정보를 불러오는 중입니다. 잠시 후 다시 시도해주세요.");
+      return;
+    }
+
+    navigation.navigate("TradingBuy", { stock });
+  };
+
+  // 🔧 매도 버튼 클릭 핸들러
+  const handleSellPress = () => {
+    console.log("📤 추천 주식 매도 버튼 클릭됨");
+    console.log("📊 전달할 stock 데이터:", stock);
+    console.log("🔍 API에 전달될 stock_symbol:", stock.stock_symbol);
+
+    // 🔧 데이터 유효성 검사
+    if (!stock.name || !stock.price || stock.price === "0") {
+      console.error("❌ 추천 주식 데이터 불완전:", stock);
+      alert("주식 정보를 불러오는 중입니다. 잠시 후 다시 시도해주세요.");
+      return;
+    }
+
+    navigation.navigate("TradingSell", { stock });
   };
 
   return (
     <View>
       <View style={styles.stockItem}>
         <View style={styles.stockInfo}>
-          <Text style={styles.stockName}>{stock.name}</Text>
+          <Text style={styles.stockName}>{stock.displayName}</Text>
           <View style={styles.priceContainer}>
-            <Text style={styles.stockPrice}>{stock.price}</Text>
+            <Text style={styles.stockPrice}>
+              {price ? `${price.toLocaleString()}원` : "-"}
+            </Text>
             {priceChangePercentage !== null && (
               <Text
                 style={[
@@ -73,16 +123,10 @@ const RecommendedStock = ({ stockCode, navigation, styles }) => {
           </View>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.buyButton}
-            onPress={() => navigation.navigate("TradingBuy", { stock })}
-          >
+          <TouchableOpacity style={styles.buyButton} onPress={handleBuyPress}>
             <Text style={styles.buyText}>매수</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.sellButton}
-            onPress={() => navigation.navigate("TradingSell", { stock })}
-          >
+          <TouchableOpacity style={styles.sellButton} onPress={handleSellPress}>
             <Text style={styles.sellText}>매도</Text>
           </TouchableOpacity>
         </View>
@@ -122,7 +166,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-
   buttonContainer: {
     flexDirection: "row",
     gap: 10,

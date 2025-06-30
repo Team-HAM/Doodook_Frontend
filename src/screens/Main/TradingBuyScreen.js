@@ -46,22 +46,77 @@ const TradingBuyScreen = ({ route, navigation }) => {
   //   return unsubscribe;
   // }, [navigation]);
 
+  // TradingBuyScreen.js의 handleBuy 함수 수정 부분
+
   const handleBuy = async () => {
+    console.log("💰 실제 매수 프로세스 시작!");
+
+    if (!stock || !stock.name) {
+      console.error("❌ stock 정보 없음");
+      Alert.alert("오류", "주식 정보가 올바르지 않습니다.");
+      return;
+    }
+
+    if (!quantity || parseInt(quantity) <= 0) {
+      console.error("❌ 수량 오류");
+      Alert.alert("오류", "올바른 수량을 입력해주세요.");
+      return;
+    }
+
+    if (parsedPrice <= 0) {
+      console.error("❌ 가격 오류");
+      Alert.alert("오류", "주식 가격 정보가 올바르지 않습니다.");
+      return;
+    }
+
     setLoading(true);
+
     try {
+      console.log("🔄 매수 요청 시작...");
+
       const accessToken = await getNewAccessToken(navigation);
       if (!accessToken || !userId) {
+        console.error(
+          "❌ 인증 실패 - accessToken:",
+          !!accessToken,
+          "userId:",
+          userId
+        );
         Alert.alert("오류", "사용자 인증에 실패했습니다.");
         return;
       }
 
+      // 🔧 종목 식별자 결정 로직
+      let stockSymbolForAPI;
+
+      if (stock._source === "recommended" && stock.stock_symbol) {
+        // 추천 주식인 경우 종목코드 사용
+        stockSymbolForAPI = stock.stock_symbol;
+        console.log("📊 추천 주식 - 종목코드 사용:", stockSymbolForAPI);
+      } else if (stock.symbol) {
+        // symbol이 있으면 종목코드 사용
+        stockSymbolForAPI = stock.symbol;
+        console.log("📊 종목코드 사용:", stockSymbolForAPI);
+      } else {
+        // 기본적으로 name 사용 (기존 보유 주식)
+        stockSymbolForAPI = stock.name;
+        console.log("📊 종목명 사용:", stockSymbolForAPI);
+      }
+
       const postData = {
         user_id: userId,
-        stock_symbol: stock.name,
+        stock_symbol: stockSymbolForAPI, // 🔧 결정된 식별자 사용
         order_type: "buy",
         quantity: parseInt(quantity),
         price: parsedPrice,
       };
+
+      console.log("📡 API 요청 데이터:", postData);
+      console.log("🔍 stock._source:", stock._source);
+      console.log("🔍 stock.stock_symbol:", stock.stock_symbol);
+      console.log("🔍 stock.symbol:", stock.symbol);
+      console.log("🔍 stock.name:", stock.name);
+      console.log("🔍 최종 사용된 stock_symbol:", stockSymbolForAPI);
 
       const response = await fetch(`${API_BASE_URL}trading/trade/`, {
         method: "POST",
@@ -72,12 +127,29 @@ const TradingBuyScreen = ({ route, navigation }) => {
         body: JSON.stringify(postData),
       });
 
-      const result = await response.json();
+      console.log("📬 응답 상태:", response.status);
+
+      const responseText = await response.text();
+      console.log("📦 응답 본문:", responseText);
+
+      let result;
+      try {
+        result = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error("❌ JSON 파싱 실패:", parseError);
+        Alert.alert("❌ 서버 오류", "서버 응답 형식이 올바르지 않습니다.");
+        return;
+      }
+
       if (response.ok && result?.status === "success") {
-        Alert.alert("매수 성공", result.message);
+        Alert.alert("매수 성공", result.message || "매수가 완료되었습니다.");
         navigation.goBack();
       } else {
-        Alert.alert("❌ 매수 실패", result?.message || "오류 발생");
+        console.error("❌ 매수 실패:", result);
+        Alert.alert(
+          "❌ 매수 실패",
+          result?.message || `오류 발생 (${response.status})`
+        );
       }
     } catch (error) {
       console.error("❌ 매수 오류:", error);

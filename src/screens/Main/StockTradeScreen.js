@@ -151,10 +151,30 @@ const StockTradeScreen = ({ navigation }) => {
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={styles.buyButton}
-                  onPress={() => navigation.navigate("TradingBuy", { stock })}
+                  onPress={() => {
+                    // 🔧 디버깅 로그 추가
+                    console.log("매수 버튼 클릭됨");
+                    console.log("전달할 stock 데이터:", {
+                      id: stock.id,
+                      name: stock.name,
+                      price: stock.price,
+                      change: stock.change,
+                      quantity: stock.quantity,
+                      symbol: stock.symbol,
+                    });
+
+                    if (!stock.name || stock.price === "-" || !stock.price) {
+                      console.error("잘못된 stock 데이터가 전달됨");
+                      Alert.alert("오류", "주식 정보가 완전하지 않습니다.");
+                      return;
+                    }
+
+                    navigation.navigate("TradingBuy", { stock });
+                  }}
                 >
                   <Text style={styles.buyText}>매수</Text>
                 </TouchableOpacity>
+
                 <TouchableOpacity
                   style={styles.sellButton}
                   onPress={() => navigation.navigate("TradingSell", { stock })}

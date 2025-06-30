@@ -168,7 +168,7 @@ const AssetDetailScreen = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="#EFF1F5" />
+          <Text style={styles.backText}>{"<"}</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>총 자산 상세</Text>
         <View style={{ width: 24 }} />
@@ -460,6 +460,10 @@ const styles = StyleSheet.create({
   legendLabel: {
     color: "rgba(239, 241, 245, 0.7)",
     fontSize: 14,
+  },
+  backText: {
+    fontSize: 36,
+    color: "#F074BA",
   },
 });
 
