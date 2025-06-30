@@ -1,68 +1,128 @@
-import React from 'react';
-import { View, ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
+// GuideLevel2.js
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+  Alert,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 // SVG 아이콘 import
 import CheckIcon from '../../assets/icons/studycheck.svg';
 import LockIcon from '../../assets/icons/studylock.svg';
 import StudyingIcon from '../../assets/icons/studying.svg';
 
-const levels = [
-  { id: 1, type: 'start', screen: 'Step1' },
-  { id: 2, type: 'done', screen: 'Step2' },
-  { id: 3, type: 'done', screen: 'Step3' },
-  { id: 4, type: 'chest', screen: 'Step4' },
-  { id: 5, type: 'locked', screen: 'Step5' },
-  { id: 6, type: 'locked', screen: 'Step6' },
-];
+import { API_BASE_URL } from '../../utils/apiConfig';
+import { getNewAccessToken } from '../../utils/token';
 
-const GuideLevel2 = ({ navigation }) => {
+const GuideLevel2 = () => {
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState(true);
+  const [contentProgress, setContentProgress] = useState({});
+
+  useEffect(() => {
+    const fetchProgress = async () => {
+      setLoading(true);
+      const accessToken = await getNewAccessToken(navigation);
+      if (!accessToken) {
+        Alert.alert('인증 오류', '토큰이 만료되었습니다. 다시 로그인해주세요.');
+        navigation.navigate('Login');
+        return;
+      }
+
+      try {
+        const res = await fetch(
+          `${API_BASE_URL}progress/level/2/content/`,
+          {
+            method: 'GET',
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        );
+        if (!res.ok) throw new Error(`Level 2 content fetch failed: ${res.status}`);
+        const data = await res.json();
+        setContentProgress(data.content_progress);
+      } catch (err) {
+        console.error(err);
+        Alert.alert('데이터 오류', '진행도 정보를 불러오는 중 오류가 발생했습니다.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProgress();
+  }, [navigation]);
+
+  if (loading) {
+    return (
+      <View style={[styles.container, styles.center]}>
+        <ActivityIndicator size="large" color="#ffffff" />
+      </View>
+    );
+  }
+
+  const entries = Object.entries(contentProgress)
+    .map(([key, done]) => ({ id: Number(key), done }))
+    .sort((a, b) => a.id - b.id);
+
+  const firstIncomplete = entries.find(e => !e.done)?.id;
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.backButton}
+        accessibilityLabel="뒤로가기"
+      >
         <Text style={styles.backText}>{'<'}</Text>
       </TouchableOpacity>
+
       <Text style={styles.title}>2단계</Text>
 
-      <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={false}>
-        {levels.map((item, index) => {
-          const isLeft = index % 2 === 0;
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
+        {entries.map(({ id, done }, idx) => {
+          const isChest = !done && id === firstIncomplete;
+          let IconComp;
+          if (done) {
+            IconComp = <CheckIcon width={96} height={96} />;
+          } else if (isChest) {
+            IconComp = <StudyingIcon width={128} height={128} />;
+          } else {
+            IconComp = <LockIcon width={96} height={96} />;
+          }
 
-          const renderIcon = () => {
-            switch (item.type) {
-              case 'start':
-                return null; // 나중에 start 아이콘 추가할 예정
-              case 'done':
-                return <CheckIcon width={96} height={96} />;
-              case 'chest':
-                return <StudyingIcon width={128} height={128} />;
-              case 'locked':
-                return <LockIcon width={96} height={96} />;
-              default:
-                return null;
-            }
+          const clickable = done || isChest;
+          const handlePress = () => {
+            navigation.navigate('StudyScreen', {
+              level: 2,
+              contentIndex: id,
+            });
           };
-
-          const isClickable = item.type !== 'locked';
-
-          const content =
-            item.type === 'start' ? (
-              <Text style={styles.startText}>START</Text>
-            ) : (
-              renderIcon()
-            );
 
           return (
             <View
-              key={index}
-              style={[styles.stepContainer, isLeft ? styles.left : styles.right]}
+              key={id}
+              style={[
+                styles.stepContainer,
+                idx % 2 === 0 ? styles.left : styles.right,
+              ]}
             >
-              {isClickable ? (
-                <TouchableOpacity onPress={() => navigation.navigate(item.screen)}>
-                  {content}
-                </TouchableOpacity>
-              ) : (
-                content
-              )}
+              <View style={styles.stepBox}>
+                {clickable ? (
+                  <TouchableOpacity onPress={handlePress}>
+                    {IconComp}
+                  </TouchableOpacity>
+                ) : (
+                  IconComp
+                )}
+                <Text style={styles.chapterLabel}>{`챕터 2-${id}`}</Text>
+              </View>
             </View>
           );
         })}
@@ -77,6 +137,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#2594B0',
     paddingHorizontal: 30,
     paddingTop: 60,
+  },
+  center: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   backButton: {
     position: 'absolute',
@@ -100,10 +164,10 @@ const styles = StyleSheet.create({
     paddingBottom: 60,
   },
   stepContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginVertical: 12,
     width: '100%',
+    marginVertical: 16,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
   },
   left: {
     justifyContent: 'flex-start',
@@ -113,12 +177,18 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     paddingRight: '15%',
   },
-  startText: {
+  stepBox: {
+    alignItems: 'center',
+  },
+  chapterLabel: {
+    marginTop: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    backgroundColor: '#FFFFFF40',
+    borderRadius: 12,
     fontSize: 14,
-    fontWeight: 'bold',
-    color: '#fff',
-    textAlign: 'center',
-    marginVertical: 10,
+    fontWeight: '600',
+    color: '#003340A0',
   },
 });
 
