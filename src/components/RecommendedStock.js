@@ -240,9 +240,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   buttonContainer: {
-    flexDirection: "column",
+    flexDirection: "row",
     gap: 8,
-    minWidth: 70,
+    minWidth: 140,
   },
   buyButton: {
     backgroundColor: "#6EE69E",
