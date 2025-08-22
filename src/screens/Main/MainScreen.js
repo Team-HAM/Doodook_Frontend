@@ -30,7 +30,6 @@ import SearchIcon from "../../assets/icons/search.svg";
 const screenWidth = Dimensions.get("window").width;
 
 const MainScreen = ({ navigation }) => {
-  console.log("📌 MainScreen 렌더링");
   const [userInfo, setUserInfo] = useState(null);
   const [searchText, setSearchText] = useState("");
   const [watchlist, setWatchlist] = useState([]); // 빈 배열로 초기화
@@ -120,7 +119,7 @@ const MainScreen = ({ navigation }) => {
                 id: stock.id || `watchlist-${stock.symbol}`,
                 name: stock.name,
                 symbol: stock.symbol,
-                price: currentPrice.toLocaleString(),
+                price: currentPrice && !isNaN(currentPrice) ? currentPrice.toLocaleString() : "0",
                 change: changeData.price_change_percentage >= 0 
                   ? `+${changeData.price_change_percentage.toFixed(2)}`
                   : `${changeData.price_change_percentage.toFixed(2)}`,
@@ -311,6 +310,7 @@ const MainScreen = ({ navigation }) => {
 
   // 금액 포맷팅
   const formatCurrency = (amount) => {
+    if (!amount || isNaN(amount)) return "0";
     return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
@@ -393,10 +393,12 @@ const MainScreen = ({ navigation }) => {
 
         <View style={styles.centerInfo}>
           <Text style={styles.centerInfoTitle}>총 자산</Text>
-          {assetData && (
+          {assetData && assetData.total_asset ? (
             <Text style={styles.centerInfoAmount}>
               {formatCurrency(assetData.total_asset)}원
             </Text>
+          ) : (
+            <Text style={styles.centerInfoAmount}>0원</Text>
           )}
         </View>
 

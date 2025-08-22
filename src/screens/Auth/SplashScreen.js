@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     left: -9,
     width: screenWidth + 12,
     height: screenHeight + 100, // 위아래로 이동한 만큼 높이 증가
-    zIndex: -1,
+    zIndex: 1,
   },
 
   // overlay: {
