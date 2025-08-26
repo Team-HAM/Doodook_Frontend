@@ -1,0 +1,24 @@
+{
+  "cli": {
+    "appVersionSource": "local"
+  },
+  "build": {
+    "production": {
+      "ios": {
+        "image": "auto",
+        "resourceClass": "m-medium",
+        "distribution": "store"
+      }
+    },
+    "internal": {
+      "ios": {
+        "image": "auto",
+        "resourceClass": "m-medium",
+        "distribution": "internal"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
