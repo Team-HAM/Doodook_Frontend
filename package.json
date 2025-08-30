@@ -34,16 +34,14 @@
     "expo-linking": "*",
     "expo-splash-screen": "*",
     "react-dom": "19.0.0",
-    "react-native": "0.79.5"
+    "react-native": "0.79.5",
+    "expo-notifications": "~0.31.4",
+    "expo-dev-client": "~5.2.4"
   },
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.28.3",
     "@react-native-community/cli": "^20.0.1",
     "react-native-svg-transformer": "^1.5.1"
-  },
-  "overrides": {
-    "react": "$react",
-    "react-dom": "$react-dom"
   }
 }

@@ -18,7 +18,10 @@
     ],
     "ios": {
       "bundleIdentifier": "com.lipeuoo.doodook",
-      "buildNumber": "7",
+      "entitlements": {
+        "aps-environment": "production"
+      },
+      "buildNumber": "9",
       "supportsTablet": true,
       "infoPlist": {
         "UIBackgroundModes": [
