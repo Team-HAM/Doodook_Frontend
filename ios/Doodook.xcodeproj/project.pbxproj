@@ -8,28 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		368BDFE5892353A252D94B8C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = EB07A91DC359E01A7299D19B /* PrivacyInfo.xcprivacy */; };
+		378C9A3F580EB1647810A3DD /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799D67FBC39875E2C8A91D40 /* ExpoModulesProvider.swift */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		5F2C2613971F50199F89DC52 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDD864CFC0B2FDAC9DB1D6C /* ExpoModulesProvider.swift */; };
+		AD8F156EE059E6DFB12F06CF /* libPods-Doodook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F2A537431A6408DF0E190831 /* libPods-Doodook.a */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		DDBA57D87224F6E28F903ED0 /* libPods-Doodook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B44F42D740351B5C1545FB5C /* libPods-Doodook.a */; };
-		DEF66C8D22229F53BAB7B634 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6F89BEB7C8053ABB3F786FF6 /* PrivacyInfo.xcprivacy */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		00171C9E597A4CBC3AB1B2A8 /* Pods-Doodook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Doodook.release.xcconfig"; path = "Target Support Files/Pods-Doodook/Pods-Doodook.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Doodook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Doodook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Doodook/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Doodook/Info.plist; sourceTree = "<group>"; };
-		2FDD864CFC0B2FDAC9DB1D6C /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Doodook/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		692C8C55C0F4CA5775CBF40F /* Pods-Doodook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Doodook.debug.xcconfig"; path = "Target Support Files/Pods-Doodook/Pods-Doodook.debug.xcconfig"; sourceTree = "<group>"; };
-		6F89BEB7C8053ABB3F786FF6 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Doodook/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		8084D87F3E7708ADD9D94DAC /* Pods-Doodook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Doodook.release.xcconfig"; path = "Target Support Files/Pods-Doodook/Pods-Doodook.release.xcconfig"; sourceTree = "<group>"; };
+		1B42B09158896E8AEAE6D788 /* Pods-Doodook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Doodook.debug.xcconfig"; path = "Target Support Files/Pods-Doodook/Pods-Doodook.debug.xcconfig"; sourceTree = "<group>"; };
+		799D67FBC39875E2C8A91D40 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Doodook/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = Doodook/SplashScreen.storyboard; sourceTree = "<group>"; };
-		B44F42D740351B5C1545FB5C /* libPods-Doodook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Doodook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		EB07A91DC359E01A7299D19B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Doodook/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Doodook/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* Doodook-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Doodook-Bridging-Header.h"; path = "Doodook/Doodook-Bridging-Header.h"; sourceTree = "<group>"; };
+		F2A537431A6408DF0E190831 /* libPods-Doodook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Doodook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDBA57D87224F6E28F903ED0 /* libPods-Doodook.a in Frameworks */,
+				AD8F156EE059E6DFB12F06CF /* libPods-Doodook.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,7 +53,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				6F89BEB7C8053ABB3F786FF6 /* PrivacyInfo.xcprivacy */,
+				EB07A91DC359E01A7299D19B /* PrivacyInfo.xcprivacy */,
 			);
 			name = Doodook;
 			sourceTree = "<group>";
@@ -62,9 +62,19 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				B44F42D740351B5C1545FB5C /* libPods-Doodook.a */,
+				F2A537431A6408DF0E190831 /* libPods-Doodook.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		601FBDDBA77BB67795499FD6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1B42B09158896E8AEAE6D788 /* Pods-Doodook.debug.xcconfig */,
+				00171C9E597A4CBC3AB1B2A8 /* Pods-Doodook.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -81,8 +91,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				848CAB1E5DE1821CE2828D6F /* Pods */,
-				C45923833F73B3B43E24E721 /* ExpoModulesProviders */,
+				601FBDDBA77BB67795499FD6 /* Pods */,
+				F60BD69210E41C88D6742208 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -97,14 +107,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		848CAB1E5DE1821CE2828D6F /* Pods */ = {
+		98BB660742204E48E2604836 /* Doodook */ = {
 			isa = PBXGroup;
 			children = (
-				692C8C55C0F4CA5775CBF40F /* Pods-Doodook.debug.xcconfig */,
-				8084D87F3E7708ADD9D94DAC /* Pods-Doodook.release.xcconfig */,
+				799D67FBC39875E2C8A91D40 /* ExpoModulesProvider.swift */,
 			);
-			name = Pods;
-			path = Pods;
+			name = Doodook;
 			sourceTree = "<group>";
 		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
@@ -116,20 +124,12 @@
 			path = Doodook/Supporting;
 			sourceTree = "<group>";
 		};
-		C45923833F73B3B43E24E721 /* ExpoModulesProviders */ = {
+		F60BD69210E41C88D6742208 /* ExpoModulesProviders */ = {
 			isa = PBXGroup;
 			children = (
-				CB5AA2F620F5DEF670BB6981 /* Doodook */,
+				98BB660742204E48E2604836 /* Doodook */,
 			);
 			name = ExpoModulesProviders;
-			sourceTree = "<group>";
-		};
-		CB5AA2F620F5DEF670BB6981 /* Doodook */ = {
-			isa = PBXGroup;
-			children = (
-				2FDD864CFC0B2FDAC9DB1D6C /* ExpoModulesProvider.swift */,
-			);
-			name = Doodook;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,13 +140,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Doodook" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				DD3443955F695EFD2F47AF95 /* [Expo] Configure project */,
+				34BE9C2256D72184D3CE6345 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				CF5C7CAF6277FF2D6245E2FF /* [CP] Embed Pods Frameworks */,
+				91EB0D5C635861882CEB9E2D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -196,7 +196,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				DEF66C8D22229F53BAB7B634 /* PrivacyInfo.xcprivacy in Resources */,
+				368BDFE5892353A252D94B8C /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +239,25 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		34BE9C2256D72184D3CE6345 /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-Doodook/expo-configure-project.sh\"\n";
 		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -320,7 +339,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Doodook/Pods-Doodook-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CF5C7CAF6277FF2D6245E2FF /* [CP] Embed Pods Frameworks */ = {
+		91EB0D5C635861882CEB9E2D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -338,25 +357,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Doodook/Pods-Doodook-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DD3443955F695EFD2F47AF95 /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-Doodook/expo-configure-project.sh\"\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -365,7 +365,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				5F2C2613971F50199F89DC52 /* ExpoModulesProvider.swift in Sources */,
+				378C9A3F580EB1647810A3DD /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,7 +374,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 692C8C55C0F4CA5775CBF40F /* Pods-Doodook.debug.xcconfig */;
+			baseConfigurationReference = 1B42B09158896E8AEAE6D788 /* Pods-Doodook.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -410,7 +410,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8084D87F3E7708ADD9D94DAC /* Pods-Doodook.release.xcconfig */;
+			baseConfigurationReference = 00171C9E597A4CBC3AB1B2A8 /* Pods-Doodook.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
