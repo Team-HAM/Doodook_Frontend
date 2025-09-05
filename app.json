@@ -13,17 +13,13 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "com.lipeuoo.doodook",
       "buildNumber": "7",
       "supportsTablet": true,
       "infoPlist": {
-        "UIBackgroundModes": [
-          "remote-notification"
-        ],
+        "UIBackgroundModes": ["remote-notification"],
         "ITSAppUsesNonExemptEncryption": false
       }
     },
@@ -32,13 +28,13 @@
         "foregroundImage": "./src/assets/images/logo-d-app-icon-1500.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.r8ol7z.doodook"
+      "package": "com.r8ol7z.doodook",
+      "googleServicesFile": "./android/app/google-services.json"
     },
     "web": {
       "favicon": "./src/assets/images/logo-d-app-icon-1500.png"
     },
     "plugins": [
-      "expo-asset",
       [
         "expo-notifications",
         {
@@ -47,6 +43,5 @@
         }
       ]
     ]
-
   }
 }

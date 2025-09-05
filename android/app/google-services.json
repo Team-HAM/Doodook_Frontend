@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "312220334636",
+    "project_id": "doodook-realandroid",
+    "storage_bucket": "doodook-realandroid.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312220334636:android:d582d9f174bbabfd042f89",
+        "android_client_info": {
+          "package_name": "com.r8ol7z.doodook"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVX0qwHGOtaYo_ca7oaYkQGMnO8AgtttM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
