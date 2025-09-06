@@ -46,22 +46,21 @@ const MyPageScreen = ({ navigation }) => {
 
   const handleLogout = async () => {
     try {
-      
-      // 🔔 Push Token 해제
 
+      console.log("📱 Push Token 해제 시작");
       try {
-        const pushUnregisterSuccess = await unregisterPushToken();
+        const pushUnregisterSuccess = await unregisterPushToken(navigation); // ⭐ 수정: navigation 파라미터 추가
         if (pushUnregisterSuccess) {
           console.log("✅ Push Token 해제 성공");
         } else {
-          console.warn("Push Token 해제 실패");
+          console.warn("⚠️ Push Token 해제 실패 (계속 진행)");
         }
       } catch (pushError) {
-        console.error("Push Token 해제 중 오류:", pushError);
-        // Push Token 해제 실패해도 로그아웃됨
+        console.error("❌ Push Token 해제 중 오류:", pushError);
+  
       }
 
-      // 서버에 로그아웃 요청 시도 (실패해도 로컬 정리는 진행)
+
       try {
         const accessToken = await getNewAccessToken(navigation);
         if (accessToken) {
@@ -81,15 +80,14 @@ const MyPageScreen = ({ navigation }) => {
         }
       } catch (serverError) {
         console.warn("⚠️ 서버 로그아웃 요청 중 오류:", serverError);
-        // 서버 요청이 실패해도 로컬 정리는 계속 진행
       }
 
-      // 로컬 저장소의 모든 관련 데이터 정리
+
       await Promise.all([
         clearTokens(), // 토큰 정리
         AsyncStorage.removeItem("userEmail"),
         AsyncStorage.removeItem("userPassword"),
-        AsyncStorage.removeItem("deviceId"),
+        AsyncStorage.removeItem("deviceId"), 
         AsyncStorage.removeItem("pushToken"),
       ]);
 
@@ -99,7 +97,7 @@ const MyPageScreen = ({ navigation }) => {
         {
           text: "확인",
           onPress: () => {
-            // navigation.reset을 사용하여 이전 화면 스택 정리
+
             navigation.reset({
               index: 0,
               routes: [{ name: "Login" }],
@@ -110,14 +108,13 @@ const MyPageScreen = ({ navigation }) => {
     } catch (err) {
       console.error("❌ 로그아웃 중 오류:", err);
 
-      // 오류가 발생해도 최소한 토큰은 정리하고 로그인 화면으로 이동
       try {
         await Promise.all([
           clearTokens(),
           AsyncStorage.removeItem("userEmail"),
           AsyncStorage.removeItem("userPassword"),
           AsyncStorage.removeItem("deviceId"), 
-          AsyncStorage.removeItem("pushToken")
+          AsyncStorage.removeItem("pushToken"), 
         ]);
       } catch (cleanupError) {
         console.error("❌ 로컬 데이터 정리 중 오류:", cleanupError);
@@ -148,12 +145,15 @@ const MyPageScreen = ({ navigation }) => {
           style: "destructive",
           onPress: async () => {
             try {
+              // ⭐ 추가: Push Token 해제 (회원 탈퇴 시)
+              console.log("📱 회원 탈퇴 - Push Token 해제 시작");
               try {
-                await unregisterPushToken();
-                console.log("회원탈퇴 시 Push Token 해제 완료");
+                await unregisterPushToken(navigation); // ⭐ 수정: navigation 파라미터 추가
+                console.log("✅ 탈퇴 시 Push Token 해제 성공");
               } catch (pushError) {
-                console.error("오류:", pushError);
+                console.error("❌ 탈퇴 시 Push Token 해제 오류:", pushError);
               }
+              // ⭐ 추가 끝
 
               const accessToken = await getNewAccessToken(navigation);
               if (!accessToken) {
@@ -174,13 +174,15 @@ const MyPageScreen = ({ navigation }) => {
               });
 
               if (response.ok) {
+                // ⭐ 추가: 로컬 데이터도 정리 (Push 관련 포함)
                 await Promise.all([
                   clearTokens(),
                   AsyncStorage.removeItem("userEmail"),
                   AsyncStorage.removeItem("userPassword"),
                   AsyncStorage.removeItem("deviceId"), 
-                  AsyncStorage.removeItem("pushToken"),
+                  AsyncStorage.removeItem("pushToken"), 
                 ]);
+                // ⭐ 추가 끝
 
                 Alert.alert("탈퇴 완료", "계정이 삭제되었습니다.");
                 navigation.navigate("Login");

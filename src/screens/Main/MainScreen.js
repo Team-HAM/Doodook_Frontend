@@ -547,7 +547,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: 30,
-    paddingTop: 40,
+    paddingTop: 10,
     paddingBottom: 120, // 탭 바 공간 확보
   },
   searchContainer: {
