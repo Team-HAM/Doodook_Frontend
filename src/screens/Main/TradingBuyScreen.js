@@ -181,7 +181,7 @@ const TradingBuyScreen = ({ route, navigation }) => {
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 40 : 0}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0}
     >
       <SafeAreaView style={styles.safeArea}>
         {/* 헤더 */}
@@ -203,7 +203,7 @@ const TradingBuyScreen = ({ route, navigation }) => {
 
           <View style={styles.priceBlock}>
             {priceLoading ? (
-              <ActivityIndicator size="small" color="#F074BA" />
+              <ActivityIndicator size="large" color="#F074BA" />
             ) : (
               <>
                 <Text style={styles.priceText}>
@@ -216,8 +216,8 @@ const TradingBuyScreen = ({ route, navigation }) => {
                       { color: getChangeColor(stock.change) },
                     ]}
                   >
-                    {getChangeSymbol(stock.change)}
-                    {Math.abs(stock.change).toFixed(2)}%
+                    {/* {getChangeSymbol(stock.change)} */}
+                    {/* {Math.abs(stock.change).toFixed(2)}% */}
                   </Text>
                 )}
               </>
@@ -261,12 +261,12 @@ const TradingBuyScreen = ({ route, navigation }) => {
 
         {/* 매수 버튼 */}
         <TouchableOpacity
-          style={[styles.buyButton, loading && styles.disabledButton]}
+          style={[styles.buyButton, (loading || priceLoading || !userId) && styles.disabledButton]}
           onPress={handleBuy}
-          disabled={loading || priceLoading}
+          disabled={loading || priceLoading || !userId}
         >
           {loading ? (
-            <ActivityIndicator color="#003340" />
+            <ActivityIndicator color="#003340" size="large" />
           ) : (
             <Text style={styles.buyButtonText}>
               {formatNumber(parseInt(quantity) || 0)}주 매수하기
@@ -281,80 +281,80 @@ const TradingBuyScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 30,
     backgroundColor: "#003340",
+    paddingHorizontal: 50, // 30 → 50
   },
   safeArea: {
     flex: 1,
-    paddingHorizontal: 30,
-    paddingTop: 20,
+    paddingHorizontal: 50, // 30 → 50
+    paddingTop: 40, // 20 → 40
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 30,
-    marginTop: 40,
+    marginBottom: 50, // 30 → 50
+    marginTop: 60, // 40 → 60
   },
   backText: {
-    fontSize: 28,
+    fontSize: 40, // 36 → 40 (매도화면과 맞춤)
     color: "#F074BA",
-    marginRight: 15,
+    marginRight: 25, // 15 → 25
   },
   title: {
-    fontSize: 20,
+    fontSize: 28, // 32 → 28 (매도화면과 맞춤)
     fontWeight: "bold",
     color: "#F074BA",
     flex: 1,
     textAlign: "center",
-    marginRight: 43, // 뒤로가기 버튼 공간만큼 보정
+    marginRight: 65, // 43 → 65 (매도화면과 맞춤)
   },
   stockRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: 35, // 20 → 35
   },
   stockInfo: {
     flex: 1,
   },
   stockName: {
     color: "white",
-    fontSize: 18,
+    fontSize: 26, // 32 → 26 (매도화면과 맞춤)
     fontWeight: "bold",
-    marginBottom: 4,
+    marginBottom: 8,
   },
   stockCode: {
     color: "#AFA5CF",
-    fontSize: 14,
+    fontSize: 20, // 24 → 20 (매도화면과 맞춤)
   },
   priceBlock: {
     alignItems: "flex-end",
   },
   priceText: {
-    fontSize: 20,
+    fontSize: 28, // 32 → 28 (매도화면과 맞춤)
     color: "white",
     fontWeight: "bold",
-    marginBottom: 4,
+    marginBottom: 8, // 4 → 8
   },
   changeText: {
-    fontSize: 14,
+    fontSize: 20, // 24 → 20 (매도화면과 맞춤)
     fontWeight: "bold",
   },
   divider: {
-    height: 1,
+    height: 2,
     backgroundColor: "#4A5A60",
-    marginVertical: 20,
+    marginVertical: 35, // 40 → 35 (매도화면과 맞춤)
   },
   infoSection: {
-    marginBottom: 25,
+    marginBottom: 40,
   },
   label: {
-    fontSize: 16,
+    fontSize: 22, // 32 → 22 (매도화면과 맞춤)
     color: "#FFD1EB",
-    marginBottom: 8,
+    marginBottom: 15, // 12 → 15 (매도화면과 맞춤)
   },
   value: {
-    fontSize: 18,
+    fontSize: 26, // 28 → 26 (매도화면과 맞춤)
     color: "#FFFFFF",
     fontWeight: "bold",
   },
@@ -364,52 +364,52 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: "#FFFFFF",
-    borderRadius: 10,
-    paddingHorizontal: 15,
-    paddingVertical: 12,
-    fontSize: 18,
+    borderRadius: 15, // 10 → 15 (매도화면과 맞춤)
+    paddingHorizontal: 25, // 15 → 25 (매도화면과 맞춤)
+    paddingVertical: 20, // 12 → 20 (매도화면과 맞춤)
+    fontSize: 26, // 24 → 26 (매도화면과 맞춤)
     color: "#000000",
-    minWidth: 100,
+    minWidth: 150, // 100 → 150 (매도화면과 맞춤)
     textAlign: "center",
-    marginRight: 10,
+    marginRight: 15, // 10 → 15 (매도화면과 맞춤)
   },
   unit: {
-    fontSize: 18,
+    fontSize: 26, // 32 → 26 (매도화면과 맞춤)
     color: "#FFFFFF",
   },
   totalRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 30,
-    marginBottom: 40,
-    paddingVertical: 15,
-    paddingHorizontal: 20,
+    marginTop: 40, // 30 → 40 (매도화면과 맞춤)
+    marginBottom: 25, // 40 → 25 (매도화면과 맞춤)
+    paddingVertical: 25, // 35 → 25 (매도화면과 맞춤)
+    paddingHorizontal: 35, // 30 → 35 (매도화면과 맞춤)
     backgroundColor: "#004455",
-    borderRadius: 10,
+    borderRadius: 15, // 10 → 15 (매도화면과 맞춤)
   },
   totalLabel: {
-    fontSize: 16,
+    fontSize: 24, // 28 → 24 (매도화면과 맞춤)
     color: "#FFFFFF",
   },
   totalAmount: {
-    fontSize: 20,
+    fontSize: 28, // 36 → 28 (매도화면과 맞춤)
     fontWeight: "bold",
     color: "#6EE69E",
   },
   buyButton: {
     marginTop: "auto",
     backgroundColor: "#6EE69E",
-    borderRadius: 12,
-    paddingVertical: 16,
+    borderRadius: 20, // 16 → 20 (매도화면과 맞춤)
+    paddingVertical: 25, // 28 → 25 (매도화면과 맞춤)
     alignItems: "center",
-    marginBottom: 30,
+    marginBottom: 50, // 30 → 50 (매도화면과 맞춤)
   },
   disabledButton: {
     backgroundColor: "#A0A0A0",
   },
   buyButtonText: {
-    fontSize: 18,
+    fontSize: 26, // 36 → 26 (매도화면과 맞춤)
     fontWeight: "bold",
     color: "#003340",
   },

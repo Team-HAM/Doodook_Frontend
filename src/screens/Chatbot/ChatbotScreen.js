@@ -19,9 +19,10 @@ import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import SearchIcon from "../../assets/icons/search.svg";
 import { chatbotReply } from "../../utils/chatbotReply";
 
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
-const INPUT_BAR_HEIGHT = 70;
-const INPUT_FONT_SIZE = 16;
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
+const isTablet = SCREEN_WIDTH >= 768;
+const INPUT_BAR_HEIGHT = isTablet ? 80 : 70;
+const INPUT_FONT_SIZE = isTablet ? 18 : 16;
 const GAP_FROM_TAB = 0;
 
 const ChatbotScreen = () => {
@@ -38,7 +39,7 @@ const ChatbotScreen = () => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [inputHeight, setInputHeight] = useState(44);
+  const [inputHeight, setInputHeight] = useState(isTablet ? 48 : 44);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   
   const scrollRef = useRef(null);
@@ -123,7 +124,7 @@ const ChatbotScreen = () => {
       setInput("");
       setLoading(true);
       setShowSuggestions(false);
-      setInputHeight(44);
+      setInputHeight(isTablet ? 48 : 44);
 
       setTimeout(() => {
         scrollRef.current?.scrollToEnd({ animated: true });
@@ -163,13 +164,13 @@ const ChatbotScreen = () => {
   );
 
   // 동적 높이 계산
-  const dynamicInputBarHeight = Math.max(INPUT_BAR_HEIGHT, inputHeight + 26);
+  const dynamicInputBarHeight = Math.max(INPUT_BAR_HEIGHT, inputHeight + (isTablet ? 32 : 26));
   const bottomOffset = keyboardHeight > 0 ? 0 : tabBarHeight + GAP_FROM_TAB;
   
   // 추천 질문 컨테이너의 bottom 위치 계산 (키보드 높이 포함)
   const suggestionBottomPosition = keyboardHeight > 0 
-    ? keyboardHeight + dynamicInputBarHeight + 12
-    : bottomOffset + dynamicInputBarHeight + 12;
+    ? keyboardHeight + dynamicInputBarHeight + (isTablet ? 16 : 12)
+    : bottomOffset + dynamicInputBarHeight + (isTablet ? 16 : 12);
 
   const TypingIndicator = () => {
     const dot1Anim = useRef(new Animated.Value(0.4)).current;
@@ -207,7 +208,7 @@ const ChatbotScreen = () => {
         keyboardVerticalOffset={0}
       >
         {/* Header */}
-        <View style={[styles.header, { paddingTop: insets.top + 20 }]}>
+        <View style={[styles.header, { paddingTop: insets.top + (isTablet ? 30 : 20) }]}>
           <View style={styles.aiIndicator}>
             <View style={styles.aiDot} />
             <Text style={styles.aiText}>AI Assistant</Text>
@@ -220,7 +221,7 @@ const ChatbotScreen = () => {
           style={styles.chatScroll}
           contentContainerStyle={[
             styles.chatContainer,
-            { paddingBottom: dynamicInputBarHeight + keyboardHeight + 20 },
+            { paddingBottom: dynamicInputBarHeight + keyboardHeight + (isTablet ? 30 : 20) },
           ]}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
@@ -321,7 +322,7 @@ const ChatbotScreen = () => {
           style={[
             styles.inputBar,
             {
-              paddingBottom: Math.max(insets.bottom, 12),
+              paddingBottom: Math.max(insets.bottom, isTablet ? 16 : 12),
               bottom: bottomOffset,
             },
           ]}
@@ -349,7 +350,9 @@ const ChatbotScreen = () => {
                 onChangeText={setInput}
                 onContentSizeChange={(event) => {
                   const { height } = event.nativeEvent.contentSize;
-                  const newHeight = Math.min(Math.max(height + 8, 44), 120);
+                  const baseHeight = isTablet ? 48 : 44;
+                  const maxHeight = isTablet ? 140 : 120;
+                  const newHeight = Math.min(Math.max(height + 8, baseHeight), maxHeight);
                   setInputHeight(newHeight);
                 }}
                 returnKeyType="send"
@@ -372,7 +375,7 @@ const ChatbotScreen = () => {
               {loading ? (
                 <ActivityIndicator size="small" color="#FFFFFF" />
               ) : (
-                <SearchIcon width={20} height={20} />
+                <SearchIcon width={isTablet ? 24 : 20} height={isTablet ? 24 : 20} />
               )}
             </TouchableOpacity>
           </View>
@@ -393,8 +396,8 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    paddingBottom: 20,
-    paddingHorizontal: 20,
+    paddingBottom: isTablet ? 25 : 20,
+    paddingHorizontal: isTablet ? 30 : 20,
     alignItems: "center",
     borderBottomWidth: 1,
     borderBottomColor: "rgba(255,255,255,0.08)",
@@ -404,15 +407,15 @@ const styles = StyleSheet.create({
   aiIndicator: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 4,
+    marginBottom: isTablet ? 6 : 4,
   },
 
   aiDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: isTablet ? 10 : 8,
+    height: isTablet ? 10 : 8,
+    borderRadius: isTablet ? 5 : 4,
     backgroundColor: "#fb9dd2ff",
-    marginRight: 8,
+    marginRight: isTablet ? 10 : 8,
     shadowColor: "#10b981",
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
@@ -422,14 +425,14 @@ const styles = StyleSheet.create({
 
   aiText: {
     color: "#FFFFFF",
-    fontSize: 16,
+    fontSize: isTablet ? 20 : 16,
     fontWeight: "600",
     letterSpacing: 0.5,
   },
 
   headerSubtitle: {
     color: "rgba(255,255,255,0.7)",
-    fontSize: 14,
+    fontSize: isTablet ? 16 : 14,
     letterSpacing: 0.3,
   },
 
@@ -439,13 +442,13 @@ const styles = StyleSheet.create({
   },
 
   chatContainer: {
-    paddingTop: 20,
-    paddingHorizontal: 16,
+    paddingTop: isTablet ? 30 : 20,
+    paddingHorizontal: isTablet ? 24 : 16,
   },
 
   messageWrapper: {
     flexDirection: "row",
-    marginBottom: 16,
+    marginBottom: isTablet ? 20 : 16,
     alignItems: "flex-end",
   },
 
@@ -458,13 +461,13 @@ const styles = StyleSheet.create({
   },
 
   avatarContainer: {
-    marginHorizontal: 8,
+    marginHorizontal: isTablet ? 12 : 8,
   },
 
   botAvatar: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: isTablet ? 40 : 32,
+    height: isTablet ? 40 : 32,
+    borderRadius: isTablet ? 20 : 16,
     backgroundColor: "rgba(16, 185, 129, 0.2)",
     alignItems: "center",
     justifyContent: "center",
@@ -473,9 +476,9 @@ const styles = StyleSheet.create({
   },
 
   userAvatar: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: isTablet ? 40 : 32,
+    height: isTablet ? 40 : 32,
+    borderRadius: isTablet ? 20 : 16,
     backgroundColor: "rgba(230, 59, 246, 0.2)",
     alignItems: "center",
     justifyContent: "center",
@@ -484,14 +487,14 @@ const styles = StyleSheet.create({
   },
 
   avatarText: {
-    fontSize: 14,
+    fontSize: isTablet ? 18 : 14,
   },
 
   messageBubble: {
-    maxWidth: SCREEN_WIDTH * 0.7,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 20,
+    maxWidth: SCREEN_WIDTH * (isTablet ? 0.6 : 0.7),
+    paddingVertical: isTablet ? 16 : 12,
+    paddingHorizontal: isTablet ? 20 : 16,
+    borderRadius: isTablet ? 24 : 20,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -500,19 +503,19 @@ const styles = StyleSheet.create({
 
   botBubble: {
     backgroundColor: "rgba(255, 255, 255, 0.95)",
-    borderBottomLeftRadius: 6,
+    borderBottomLeftRadius: isTablet ? 8 : 6,
     shadowColor: "#000000",
   },
 
   userBubble: {
     backgroundColor: "#fb9dd2ff",
-    borderBottomRightRadius: 6,
+    borderBottomRightRadius: isTablet ? 8 : 6,
     shadowColor: "#3b82f6",
   },
 
   messageText: {
-    fontSize: 15,
-    lineHeight: 20,
+    fontSize: isTablet ? 17 : 15,
+    lineHeight: isTablet ? 24 : 20,
     letterSpacing: 0.2,
   },
 
@@ -528,15 +531,15 @@ const styles = StyleSheet.create({
   typingContainer: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 4,
+    paddingVertical: isTablet ? 6 : 4,
   },
 
   typingDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
+    width: isTablet ? 8 : 6,
+    height: isTablet ? 8 : 6,
+    borderRadius: isTablet ? 4 : 3,
     backgroundColor: "#9CA3AF",
-    marginRight: 4,
+    marginRight: isTablet ? 6 : 4,
   },
 
   // Suggestions
@@ -544,42 +547,42 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     right: 0,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: isTablet ? 24 : 16,
+    paddingVertical: isTablet ? 16 : 12,
   },
 
   suggestionBackground: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: "rgba(0, 51, 64, 0.95)",
-    borderRadius: 12,
+    borderRadius: isTablet ? 16 : 12,
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.1)",
   },
 
   suggestionHeader: {
-    marginBottom: 12,
+    marginBottom: isTablet ? 16 : 12,
   },
 
   suggestionTitle: {
     color: "#FFFFFF",
-    fontSize: 16,
+    fontSize: isTablet ? 18 : 16,
     fontWeight: "600",
     letterSpacing: 0.3,
   },
 
   suggestionRow: {
-    paddingVertical: 8,
+    paddingVertical: isTablet ? 12 : 8,
   },
 
   suggestionCard: {
     backgroundColor: "rgba(255, 255, 255, 0.1)",
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 16,
+    paddingVertical: isTablet ? 16 : 12,
+    paddingHorizontal: isTablet ? 20 : 16,
+    borderRadius: isTablet ? 20 : 16,
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.15)",
-    marginRight: 12,
-    minWidth: 140,
+    marginRight: isTablet ? 16 : 12,
+    minWidth: isTablet ? 160 : 140,
     alignItems: "center",
     shadowColor: "#000000",
     shadowOffset: { width: 0, height: 2 },
@@ -589,33 +592,33 @@ const styles = StyleSheet.create({
   },
 
   suggestionIcon: {
-    fontSize: 20,
-    marginBottom: 4,
+    fontSize: isTablet ? 24 : 20,
+    marginBottom: isTablet ? 6 : 4,
   },
 
   suggestionText: {
-    fontSize: 13,
+    fontSize: isTablet ? 15 : 13,
     color: "#FFFFFF",
     fontWeight: "500",
     textAlign: "center",
-    lineHeight: 16,
-    marginBottom: 2,
+    lineHeight: isTablet ? 18 : 16,
+    marginBottom: isTablet ? 4 : 2,
   },
 
   suggestionCategory: {
-    fontSize: 10,
+    fontSize: isTablet ? 12 : 10,
     color: "rgba(255, 255, 255, 0.6)",
     backgroundColor: "rgba(255, 255, 255, 0.1)",
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 8,
+    paddingHorizontal: isTablet ? 8 : 6,
+    paddingVertical: isTablet ? 3 : 2,
+    borderRadius: isTablet ? 10 : 8,
     overflow: "hidden",
   },
 
   // Input Bar
   inputBar: {
-    paddingTop: 12,
-    paddingHorizontal: 16,
+    paddingTop: isTablet ? 16 : 12,
+    paddingHorizontal: isTablet ? 24 : 16,
     backgroundColor: "#003340",
     borderTopWidth: 1,
     borderTopColor: "rgba(255, 255, 255, 0.1)",
@@ -624,14 +627,14 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
     alignItems: "flex-end",
-    gap: 8,
-    minHeight: 44,
+    gap: isTablet ? 12 : 8,
+    minHeight: isTablet ? 48 : 44,
   },
 
   suggestionButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: isTablet ? 48 : 44,
+    height: isTablet ? 48 : 44,
+    borderRadius: isTablet ? 24 : 22,
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     alignItems: "center",
     justifyContent: "center",
@@ -646,34 +649,34 @@ const styles = StyleSheet.create({
   },
 
   suggestionButtonIcon: {
-    fontSize: 18,
+    fontSize: isTablet ? 20 : 18,
   },
 
   textInputContainer: {
     flex: 1,
     backgroundColor: "rgba(255, 255, 255, 0.1)",
-    borderRadius: 22,
+    borderRadius: isTablet ? 24 : 22,
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.15)",
-    minHeight: 44,
-    maxHeight: 120,
+    minHeight: isTablet ? 48 : 44,
+    maxHeight: isTablet ? 140 : 120,
     justifyContent: "center",
   },
 
   textInput: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: isTablet ? 20 : 16,
+    paddingVertical: isTablet ? 14 : 12,
     color: "#FFFFFF",
     fontSize: INPUT_FONT_SIZE,
-    lineHeight: 20,
+    lineHeight: isTablet ? 24 : 20,
     letterSpacing: 0.2,
-    minHeight: 44,
+    minHeight: isTablet ? 48 : 44,
   },
 
   sendButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: isTablet ? 48 : 44,
+    height: isTablet ? 48 : 44,
+    borderRadius: isTablet ? 24 : 22,
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     alignItems: "center",
     justifyContent: "center",

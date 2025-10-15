@@ -175,7 +175,7 @@ const TradingSellScreen = ({ route, navigation }) => {
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 40 : 0}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0}
     >
       <SafeAreaView style={styles.safeArea}>
         {/* 헤더 */}
@@ -195,14 +195,14 @@ const TradingSellScreen = ({ route, navigation }) => {
 
           <View style={styles.priceBlock}>
             {priceLoading ? (
-              <ActivityIndicator size="small" color="#F074BA" />
+              <ActivityIndicator size="large" color="#F074BA" />
             ) : (
               <>
                 <Text style={styles.priceText}>{formatNumber(currentPrice)}원</Text>
                 {stock?.change !== undefined && (
                   <Text style={[styles.changeText, { color: getChangeColor(stock.change) }]}>
-                    {getChangeSymbol(stock.change)}
-                    {Math.abs(stock.change).toFixed(2)}%
+                    {/* {getChangeSymbol(stock.change)} */}
+                    {/* {Math.abs(stock.change).toFixed(2)}% */}
                   </Text>
                 )}
               </>
@@ -283,7 +283,7 @@ const TradingSellScreen = ({ route, navigation }) => {
           disabled={loading || priceLoading || maxSellQuantity === 0 || !userId}
         >
           {loading ? (
-            <ActivityIndicator color="#003340" />
+            <ActivityIndicator color="#003340" size="large" />
           ) : maxSellQuantity === 0 ? (
             <Text style={styles.sellButtonText}>매도할 주식이 없습니다</Text>
           ) : (
@@ -298,37 +298,171 @@ const TradingSellScreen = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#003340", paddingHorizontal: 30 },
-  safeArea: { flex: 1, paddingHorizontal: 30, paddingTop: 20 },
-  header: { flexDirection: "row", alignItems: "center", marginBottom: 30, marginTop: 40 },
-  backText: { fontSize: 28, color: "#F074BA", marginRight: 15 },
-  title: { fontSize: 20, fontWeight: "bold", color: "#F074BA", flex: 1, textAlign: "center", marginRight: 43 },
-  stockRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 20 },
+  container: { 
+    flex: 1, 
+    backgroundColor: "#003340", 
+    paddingHorizontal: 50 // 30 → 50
+  },
+  safeArea: { 
+    flex: 1, 
+    paddingHorizontal: 50, // 30 → 50
+    paddingTop: 40 // 20 → 40
+  },
+  header: { 
+    flexDirection: "row", 
+    alignItems: "center", 
+    marginBottom: 50, // 30 → 50
+    marginTop: 60 // 40 → 60
+  },
+  backText: { 
+    fontSize: 40, // 28 → 40
+    color: "#F074BA", 
+    marginRight: 25 // 15 → 25
+  },
+  title: { 
+    fontSize: 28, // 20 → 28
+    fontWeight: "bold", 
+    color: "#F074BA", 
+    flex: 1, 
+    textAlign: "center", 
+    marginRight: 65 // 43 → 65
+  },
+  stockRow: { 
+    flexDirection: "row", 
+    justifyContent: "space-between", 
+    alignItems: "center", 
+    marginBottom: 35 // 20 → 35
+  },
   stockInfo: { flex: 1 },
-  stockName: { color: "white", fontSize: 18, fontWeight: "bold", marginBottom: 4 },
-  stockCode: { color: "#AFA5CF", fontSize: 14 },
+  stockName: { 
+    color: "white", 
+    fontSize: 26, // 18 → 26
+    fontWeight: "bold", 
+    marginBottom: 8 // 4 → 8
+  },
+  stockCode: { 
+    color: "#AFA5CF", 
+    fontSize: 20 // 14 → 20
+  },
   priceBlock: { alignItems: "flex-end" },
-  priceText: { fontSize: 20, color: "white", fontWeight: "bold", marginBottom: 4 },
-  changeText: { fontSize: 14, fontWeight: "bold" },
-  divider: { height: 1, backgroundColor: "#4A5A60", marginVertical: 20 },
-  infoSection: { marginBottom: 25 },
-  label: { fontSize: 16, color: "#FFD1EB", marginBottom: 8 },
-  value: { fontSize: 18, color: "#FFFFFF", fontWeight: "bold" },
-  inputRow: { flexDirection: "row", alignItems: "center" },
-  input: { backgroundColor: "#FFFFFF", borderRadius: 10, paddingHorizontal: 15, paddingVertical: 12, fontSize: 18, color: "#000000", minWidth: 100, textAlign: "center", marginRight: 10 },
-  unit: { fontSize: 18, color: "#FFFFFF", marginRight: 10 },
-  maxButton: { backgroundColor: "#4A5A60", paddingHorizontal: 12, paddingVertical: 8, borderRadius: 6 },
-  maxButtonText: { color: "#FFFFFF", fontSize: 14, fontWeight: "bold" },
-  maxInfo: { fontSize: 12, color: "#AFA5CF", marginTop: 5 },
-  totalRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 20, marginBottom: 15, paddingVertical: 15, paddingHorizontal: 20, backgroundColor: "#004455", borderRadius: 10 },
-  totalLabel: { fontSize: 16, color: "#FFFFFF" },
-  totalAmount: { fontSize: 20, fontWeight: "bold", color: "#F074BA" },
-  profitRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 30, paddingVertical: 12, paddingHorizontal: 20, backgroundColor: "#002A35", borderRadius: 10 },
-  profitLabel: { fontSize: 14, color: "#FFFFFF" },
-  profitAmount: { fontSize: 16, fontWeight: "bold" },
-  sellButton: { marginTop: "auto", backgroundColor: "#F074BA", borderRadius: 12, paddingVertical: 16, alignItems: "center", marginBottom: 30 },
-  disabledButton: { backgroundColor: "#A0A0A0" },
-  sellButtonText: { fontSize: 18, fontWeight: "bold", color: "#003340" },
+  priceText: { 
+    fontSize: 28, // 20 → 28
+    color: "white", 
+    fontWeight: "bold", 
+    marginBottom: 8 // 4 → 8
+  },
+  changeText: { 
+    fontSize: 20, // 14 → 20
+    fontWeight: "bold" 
+  },
+  divider: { 
+    height: 2, // 1 → 2
+    backgroundColor: "#4A5A60", 
+    marginVertical: 35 // 20 → 35
+  },
+  infoSection: { 
+    marginBottom: 40 // 25 → 40
+  },
+  label: { 
+    fontSize: 22, // 16 → 22
+    color: "#FFD1EB", 
+    marginBottom: 15 // 8 → 15
+  },
+  value: { 
+    fontSize: 26, // 18 → 26
+    color: "#FFFFFF", 
+    fontWeight: "bold" 
+  },
+  inputRow: { 
+    flexDirection: "row", 
+    alignItems: "center" 
+  },
+  input: { 
+    backgroundColor: "#FFFFFF", 
+    borderRadius: 15, // 10 → 15
+    paddingHorizontal: 25, // 15 → 25
+    paddingVertical: 20, // 12 → 20
+    fontSize: 26, // 18 → 26
+    color: "#000000", 
+    minWidth: 150, // 100 → 150
+    textAlign: "center", 
+    marginRight: 15 // 10 → 15
+  },
+  unit: { 
+    fontSize: 26, // 18 → 26
+    color: "#FFFFFF", 
+    marginRight: 20 // 10 → 20
+  },
+  maxButton: { 
+    backgroundColor: "#4A5A60", 
+    paddingHorizontal: 20, // 12 → 20
+    paddingVertical: 15, // 8 → 15
+    borderRadius: 10 // 6 → 10
+  },
+  maxButtonText: { 
+    color: "#FFFFFF", 
+    fontSize: 20, // 14 → 20
+    fontWeight: "bold" 
+  },
+  maxInfo: { 
+    fontSize: 18, // 12 → 18
+    color: "#AFA5CF", 
+    marginTop: 10 // 5 → 10
+  },
+  totalRow: { 
+    flexDirection: "row", 
+    justifyContent: "space-between", 
+    alignItems: "center", 
+    marginTop: 40, // 20 → 40
+    marginBottom: 25, // 15 → 25
+    paddingVertical: 25, // 15 → 25
+    paddingHorizontal: 35, // 20 → 35
+    backgroundColor: "#004455", 
+    borderRadius: 15 // 10 → 15
+  },
+  totalLabel: { 
+    fontSize: 24, // 16 → 24
+    color: "#FFFFFF" 
+  },
+  totalAmount: { 
+    fontSize: 28, // 20 → 28
+    fontWeight: "bold", 
+    color: "#F074BA" 
+  },
+  profitRow: { 
+    flexDirection: "row", 
+    justifyContent: "space-between", 
+    alignItems: "center", 
+    marginBottom: 50, // 30 → 50
+    paddingVertical: 20, // 12 → 20
+    paddingHorizontal: 35, // 20 → 35
+    backgroundColor: "#002A35", 
+    borderRadius: 15 // 10 → 15
+  },
+  profitLabel: { 
+    fontSize: 20, // 14 → 20
+    color: "#FFFFFF" 
+  },
+  profitAmount: { 
+    fontSize: 24, // 16 → 24
+    fontWeight: "bold" 
+  },
+  sellButton: { 
+    marginTop: "auto", 
+    backgroundColor: "#F074BA", 
+    borderRadius: 20, // 12 → 20
+    paddingVertical: 25, // 16 → 25
+    alignItems: "center", 
+    marginBottom: 50 // 30 → 50
+  },
+  disabledButton: { 
+    backgroundColor: "#A0A0A0" 
+  },
+  sellButtonText: { 
+    fontSize: 26, // 18 → 26
+    fontWeight: "bold", 
+    color: "#003340" 
+  },
 });
 
 export default TradingSellScreen;

@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#5DB99630', // 남은 부분 색
     borderRadius: 15,
     overflow: 'hidden',
-    height: 12,
+    height: 20,
     marginRight: 8,
   },
   progressFill: {
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   },
   progressText: {
     color: '#fff',
+    fontSize: 20,
     fontWeight: 'bold',
     minWidth: 50,
     textAlign: 'right',

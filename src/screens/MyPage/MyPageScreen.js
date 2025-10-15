@@ -10,6 +10,7 @@ import {
   Alert,
   ScrollView,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "react-native-vector-icons/Feather";
@@ -20,6 +21,9 @@ import { fetchUserInfo } from "../../utils/user";
 import { fetchUserMbtiType, getMbtiImage } from "../../utils/mbtiType";
 import { increaseBalance } from "../../utils/point";
 import { unregisterPushToken } from "../../services/PushNotificationService";
+
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
+const isTablet = SCREEN_WIDTH >= 768;
 
 const MyPageScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
@@ -138,7 +142,7 @@ const MyPageScreen = ({ navigation }) => {
     <TouchableOpacity style={styles.menuButton} onPress={onPress}>
       <View style={styles.menuRow}>
         <Text style={styles.menuText}>{label}</Text>
-        <Icon name="chevron-right" size={20} color={iconColor} />
+        <Icon name="chevron-right" size={isTablet ? 24 : 20} color={iconColor} />
       </View>
     </TouchableOpacity>
   );
@@ -344,7 +348,7 @@ const handleDeleteAccount = () => {
         contentContainerStyle={[
           styles.scrollContent,
           // 하단 여유: 기기 안전영역 + 여분(80px)
-          { paddingBottom: (insets?.bottom || 0) + 80 },
+          { paddingBottom: (insets?.bottom || 0) + (isTablet ? 100 : 80) },
         ]}
         contentInsetAdjustmentBehavior="automatic"
         keyboardShouldPersistTaps="handled"
@@ -389,7 +393,7 @@ const handleDeleteAccount = () => {
                   <View style={styles.userDetailRow}>
                     <Icon
                       name="mail"
-                      size={14}
+                      size={isTablet ? 16 : 14}
                       color="#B8C5D1"
                       style={styles.detailIcon}
                     />
@@ -403,7 +407,7 @@ const handleDeleteAccount = () => {
                   <View style={styles.userDetailRow}>
                     <Icon
                       name="calendar"
-                      size={14}
+                      size={isTablet ? 16 : 14}
                       color="#B8C5D1"
                       style={styles.detailIcon}
                     />
@@ -431,7 +435,7 @@ const handleDeleteAccount = () => {
           >
             <View style={styles.rouletteButtonContent}>
               <Text style={styles.rouletteButtonText}>일일 룰렛 돌리기</Text>
-              <Icon name="arrow-right" size={20} color="#FFFFFF" />
+              <Icon name="arrow-right" size={isTablet ? 24 : 20} color="#FFFFFF" />
             </View>
           </TouchableOpacity>
         </View>
@@ -468,7 +472,7 @@ const handleDeleteAccount = () => {
             />
           </View>
         </View>
-       <View style={{ height: (insets?.bottom || 0) + 16 }} />
+       <View style={{ height: (insets?.bottom || 0) + (isTablet ? 20 : 16) }} />
       </ScrollView>
     </View>
   );
@@ -478,8 +482,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#003340",
-    paddingHorizontal: 20,
-    paddingTop: 50,
+    paddingHorizontal: isTablet ? 30 : 20,
+    paddingTop: isTablet ? 60 : 50,
   },
 
   // 전체 스크롤 뷰
@@ -487,18 +491,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: 24,
+    paddingBottom: isTablet ? 30 : 24,
   },
 
   // 프로필 섹션
   profileSection: {
-    marginTop: 20,
-    marginBottom: 10,
+    marginTop: isTablet ? 25 : 20,
+    marginBottom: isTablet ? 12 : 10,
   },
   profileCard: {
     backgroundColor: "rgba(255, 255, 255, 0.09)",
-    borderRadius: 20,
-    padding: 25,
+    borderRadius: isTablet ? 24 : 20,
+    padding: isTablet ? 30 : 25,
     flexDirection: "row",
     alignItems: "center",
     shadowColor: "#000",
@@ -506,66 +510,85 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
   },
-  profileImageContainer: { position: "relative", marginRight: 20 },
+  profileImageContainer: { 
+    position: "relative", 
+    marginRight: isTablet ? 25 : 20 
+  },
   profileImage: {
-    width: 95,
-    height: 95,
-    borderRadius: 50,
+    width: isTablet ? 115 : 95,
+    height: isTablet ? 115 : 95,
+    borderRadius: isTablet ? 58 : 50,
     backgroundColor: "rgba(212, 221, 239, 0.2)",
   },
   profileImageShadow: {
     position: "absolute",
     top: 0,
     left: 0,
-    width: 95,
-    height: 95,
-    borderRadius: 50,
+    width: isTablet ? 115 : 95,
+    height: isTablet ? 115 : 95,
+    borderRadius: isTablet ? 58 : 50,
     backgroundColor: "transparent",
     borderWidth: 1,
     borderColor: "rgba(247, 206, 229, 0.3)",
   },
-  userInfoContainer: { flex: 1, justifyContent: "center", backgroundColor: "transparent" },
+  userInfoContainer: { 
+    flex: 1, 
+    justifyContent: "center", 
+    backgroundColor: "transparent" 
+  },
   userName: {
-    fontSize: 22,
+    fontSize: isTablet ? 26 : 22,
     fontWeight: "700",
     color: "#FFD1EB",
-    marginBottom: 4,
-    marginTop: 5,
+    marginBottom: isTablet ? 6 : 4,
+    marginTop: isTablet ? 6 : 5,
     letterSpacing: 0.5,
   },
   mbtiAlias: {
-    fontSize: 14,
+    fontSize: isTablet ? 16 : 14,
     fontWeight: "400",
     color: "#dadadaff",
-    marginBottom: 13,
+    marginBottom: isTablet ? 15 : 13,
     letterSpacing: 0.3,
   },
   mbtiAliasEmpty: {
-    fontSize: 12,
+    fontSize: isTablet ? 14 : 12,
     fontWeight: "400",
     color: "rgba(168, 230, 207, 0.5)",
-    marginBottom: 13,
+    marginBottom: isTablet ? 15 : 13,
   },
-  aliasLoadingContainer: { flexDirection: "row", alignItems: "center", marginBottom: 8 },
-  aliasLoadingText: { fontSize: 12, color: "#dadadaff", marginLeft: 6, fontStyle: "italic" },
-  userDetailsContainer: { gap: 6 },
+  aliasLoadingContainer: { 
+    flexDirection: "row", 
+    alignItems: "center", 
+    marginBottom: isTablet ? 10 : 8 
+  },
+  aliasLoadingText: { 
+    fontSize: isTablet ? 14 : 12, 
+    color: "#dadadaff", 
+    marginLeft: isTablet ? 8 : 6, 
+    fontStyle: "italic" 
+  },
+  userDetailsContainer: { gap: isTablet ? 8 : 6 },
   userDetailRow: { flexDirection: "row", alignItems: "center" },
-  detailIcon: { marginRight: 8, width: 16 },
+  detailIcon: { 
+    marginRight: isTablet ? 10 : 8, 
+    width: isTablet ? 18 : 16 
+  },
   userDetailText: {
-    fontSize: 14,
+    fontSize: isTablet ? 16 : 14,
     color: "#B8C5D1",
     fontWeight: "400",
     letterSpacing: 0.2,
   },
   birthdayDday: {
-    fontSize: 12,
+    fontSize: isTablet ? 14 : 12,
     color: "#fb9dd2ff",
     fontWeight: "600",
-    marginLeft: 8,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
+    marginLeft: isTablet ? 10 : 8,
+    paddingHorizontal: isTablet ? 8 : 6,
+    paddingVertical: isTablet ? 3 : 2,
     backgroundColor: "rgba(254, 212, 236, 0.1)",
-    borderRadius: 8,
+    borderRadius: isTablet ? 10 : 8,
     overflow: "hidden",
   },
 
@@ -573,36 +596,40 @@ const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: "rgba(255, 255, 255, 0.1)",
-    marginVertical: 25,
+    marginVertical: isTablet ? 30 : 25,
   },
 
   // 돌림판 섹션
-  rouletteSection: { marginBottom: 10 },
+  rouletteSection: { marginBottom: isTablet ? 12 : 10 },
   moneyTitle: {
     color: "#c6d4e1ff",
-    fontSize: 17,
-    marginBottom: 15,
+    fontSize: isTablet ? 19 : 17,
+    marginBottom: isTablet ? 18 : 15,
     fontWeight: "500",
     textAlign: "left",
-    marginLeft: 4,
+    marginLeft: isTablet ? 6 : 4,
   },
   rouletteButton: {
     backgroundColor: "#F074BA",
-    borderRadius: 16,
-    paddingVertical: 18,
-    paddingHorizontal: 20,
+    borderRadius: isTablet ? 20 : 16,
+    paddingVertical: isTablet ? 22 : 18,
+    paddingHorizontal: isTablet ? 24 : 20,
     shadowColor: "#F074BA",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.4,
     shadowRadius: 8,
     elevation: 6,
   },
-  rouletteButtonContent: { flexDirection: "row", alignItems: "center", justifyContent: "center" },
+  rouletteButtonContent: { 
+    flexDirection: "row", 
+    alignItems: "center", 
+    justifyContent: "center" 
+  },
   rouletteButtonText: {
     color: "#FFFFFF",
-    fontSize: 17,
+    fontSize: isTablet ? 19 : 17,
     fontWeight: "600",
-    marginRight: 10,
+    marginRight: isTablet ? 12 : 10,
     letterSpacing: 0.3,
   },
 
@@ -611,19 +638,28 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   menuContainer: {
-    paddingBottom: 10,
+    paddingBottom: isTablet ? 12 : 10,
   },
   menuButton: {
     backgroundColor: "rgba(255, 255, 255, 0.06)",
-    borderRadius: 12,
-    paddingVertical: 16,
-    paddingHorizontal: 18,
-    marginBottom: 10,
+    borderRadius: isTablet ? 16 : 12,
+    paddingVertical: isTablet ? 20 : 16,
+    paddingHorizontal: isTablet ? 22 : 18,
+    marginBottom: isTablet ? 12 : 10,
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.08)",
   },
-  menuRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-  menuText: { fontSize: 17, color: "#FFFFFF", fontWeight: "500", letterSpacing: 0.2 },
+  menuRow: { 
+    flexDirection: "row", 
+    justifyContent: "space-between", 
+    alignItems: "center" 
+  },
+  menuText: { 
+    fontSize: isTablet ? 19 : 17, 
+    color: "#FFFFFF", 
+    fontWeight: "500", 
+    letterSpacing: 0.2 
+  },
 });
 
 export default MyPageScreen;

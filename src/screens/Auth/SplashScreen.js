@@ -15,7 +15,7 @@ const SplashScreen = ({ navigation }) => {
     <View style={styles.container}>
       {/* 배경 GIF - 화면 전체를 덮도록 절대 위치 설정 */}
       <Image
-        source={require("../../assets/images/splashlogo-edited-hue.gif")}
+        source={require("../../assets/images/splashlogo-edited-hue-Pad.gif")}
         style={styles.backgroundGif}
         resizeMode="cover" // 화면을 꽉 채우되 비율 유지
       />
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
     maxWidth: "38%",
     marginBottom: 18,

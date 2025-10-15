@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   backText: {
-    fontSize: 36,
+    fontSize: 28,
     color: "#F074BA",
   },
   scrollView: {
@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
     top: 10,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 20,
     color: "#FFD1EB",
     fontWeight: "bold",
     marginBottom: 0,
@@ -406,13 +406,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   stockName: {
-    fontSize: 16,
+    fontSize: 18,
     color: "#EFF1F5",
     fontWeight: "bold",
     marginBottom: 4,
   },
   stockCode: {
-    fontSize: 12,
+    fontSize: 14,
     color: "#AFA5CF",
     marginBottom: 8,
   },
@@ -421,13 +421,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   stockPrice: {
-    fontSize: 18,
+    fontSize: 20,
     color: "#EFF1F5",
     fontWeight: "bold",
     marginRight: 10,
   },
   stockChange: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
   },
   averageLine: {
@@ -451,8 +451,8 @@ const styles = StyleSheet.create({
   },
   buyButton: {
     backgroundColor: "#6EE69E",
-    paddingVertical: 8,
-    paddingHorizontal: 18,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 8,
   },
   buyText: {
@@ -462,8 +462,8 @@ const styles = StyleSheet.create({
   },
   sellButton: {
     backgroundColor: "#F074BA",
-    paddingVertical: 8,
-    paddingHorizontal: 18,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 8,
   },
   sellText: {
@@ -476,19 +476,19 @@ const styles = StyleSheet.create({
     paddingVertical: 40,
   },
   emptyText: {
-    fontSize: 16,
+    fontSize: 18,
     color: "#EFF1F5",
     textAlign: "center",
     marginBottom: 8,
   },
   emptySubText: {
-    fontSize: 14,
+    fontSize: 15,
     color: "#AFA5CF",
     textAlign: "center",
   },
   loadingText: {
     color: "#EFF1F5",
-    fontSize: 16,
+    fontSize: 18,
     marginTop: 10,
     textAlign: "center",
   },

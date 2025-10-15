@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   Alert,
   Image,
+  Dimensions,
 } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -23,6 +24,9 @@ import LockIcon from "../../assets/icons/lock.svg";
 import { API_BASE_URL } from "../../utils/apiConfig";
 import { getNewAccessToken } from "../../utils/token";
 
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
+const isTablet = SCREEN_WIDTH >= 768;
+
 const LEVELS = [1, 2, 3];
 
 const GuideScreen = () => {
@@ -31,7 +35,7 @@ const GuideScreen = () => {
   const tabBarHeight = useBottomTabBarHeight();
 
   // 상단 여백: 기기 safe-area + 추가 마진
-  const topGutter = Math.max(insets.top, 0) + 24;
+  const topGutter = Math.max(insets.top, 0) + (isTablet ? 30 : 24);
 
   const [progressMap, setProgressMap] = useState({});
   const [loading, setLoading] = useState(true);
@@ -49,7 +53,7 @@ const GuideScreen = () => {
             style={{ paddingHorizontal: 12, paddingVertical: 6 }}
             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
           >
-            <Icon name="help-circle" size={22} color="#c6d4e1" />
+            <Icon name="help-circle" size={isTablet ? 26 : 22} color="#c6d4e1" />
           </TouchableOpacity>
         ),
       });
@@ -98,7 +102,7 @@ const GuideScreen = () => {
     <TouchableOpacity style={styles.clearButton} onPress={onPress} activeOpacity={0.8}>
       <View style={styles.menuRow}>
         <Text style={styles.menuText}>{label}</Text>
-        <Icon name="chevron-right" size={20} color="#ffffff" />
+        <Icon name="chevron-right" size={isTablet ? 24 : 20} color="#ffffff" />
       </View>
     </TouchableOpacity>
   );
@@ -107,7 +111,7 @@ const GuideScreen = () => {
     <TouchableOpacity style={styles.unclearButton} onPress={onPress} activeOpacity={0.8}>
       <View style={styles.menuRow}>
         {children}
-        <Icon name="chevron-right" size={20} color="#ffffff" />
+        <Icon name="chevron-right" size={isTablet ? 24 : 20} color="#ffffff" />
       </View>
     </TouchableOpacity>
   );
@@ -134,17 +138,22 @@ const GuideScreen = () => {
           <View style={styles.tutorialCardLeft}>
             <Image
               source={require("../../assets/icons/question.png")}
-              style={{ width: 36, height: 36 }}
+              style={{ 
+                width: isTablet ? 75 : 40, 
+                height: isTablet ? 75 : 40 
+              }}
               resizeMode="contain"
             />
           </View>
-          <View style={{ flex: 1, marginHorizontal: 10 }}>
+          <View style={{ flex: 1, marginHorizontal: isTablet ? 24 : 20 }}>
             <Text style={styles.tutorialTitle}>튜토리얼 빠르게 보기</Text>
             <Text style={styles.tutorialDesc}>핵심 기능을 1분 컷으로 훑어보기</Text>
           </View>
-          <Icon name="arrow-right" size={18} color="rgba(255,255,255,0.85)" />
+          <Icon name="arrow-right" size={isTablet ? 24 : 20} color="rgba(255,255,255,0.85)" />
         </TouchableOpacity>
-
+        
+        <View style={styles.divider} />
+        
         <Text style={styles.title}>🧠 투자 유형 검사하기</Text>
 
         <View style={styles.buttonContainer}>
@@ -155,13 +164,17 @@ const GuideScreen = () => {
           >
             <View style={styles.examButtonContent}>
               <View style={styles.examIconContainer}>
-                <InspectIcon width={64} height={64} />
+                <InspectIcon 
+                  width={isTablet ? 80 : 70} 
+                  height={isTablet ? 80 : 70} 
+                  style={{ marginTop: isTablet ? 16 : 10 }}
+                />
               </View>
               <View style={styles.examTextContainer}>
                 <Text style={styles.examButtonTitle}>유형 검사하기</Text>
                 <Text style={styles.examButtonSubtitle}>간단한 질문으로 투자 성향 파악</Text>
               </View>
-              <Icon name="arrow-right" size={20} color="rgba(255,255,255,0.8)" />
+              <Icon name="arrow-right" size={isTablet ? 24 : 20} color="rgba(255,255,255,0.8)" />
             </View>
           </TouchableOpacity>
 
@@ -172,13 +185,17 @@ const GuideScreen = () => {
           >
             <View style={styles.examButtonContent}>
               <View style={styles.resultIconContainer}>
-                <ResultIcon width={64} height={64} />
+                <ResultIcon 
+                  width={isTablet ? 80 : 70} 
+                  height={isTablet ? 80 : 70} 
+                  style={{ marginTop: isTablet ? 16 : 10 }}
+                />
               </View>
               <View style={styles.examTextContainer}>
                 <Text style={styles.examButtonTitle}>결과 확인하기</Text>
                 <Text style={styles.examButtonSubtitle}>나의 투자 유형과 추천 전략</Text>
               </View>
-              <Icon name="arrow-right" size={20} color="rgba(255,255,255,0.8)" />
+              <Icon name="arrow-right" size={isTablet ? 24 : 20} color="rgba(255,255,255,0.8)" />
             </View>
           </TouchableOpacity>
         </View>
@@ -210,12 +227,22 @@ const GuideScreen = () => {
                   <UnClearButton onPress={onPress}>
                     <View style={styles.labelWithIcon}>
                       <Text style={styles.menuText}>{label}</Text>
-                      {showLockIcon && <LockIcon style={styles.lockIcon} width={20} height={20} />}
+                      {showLockIcon && (
+                        <LockIcon 
+                          style={styles.lockIcon} 
+                          width={isTablet ? 24 : 20} 
+                          height={isTablet ? 24 : 20} 
+                        />
+                      )}
                     </View>
                   </UnClearButton>
                 )}
 
-                <LearningProgressBar current={data.completed} total={data.total} />
+                <LearningProgressBar 
+                  current={data.completed} 
+                  total={data.total} 
+                  textStyle={styles.progressText} 
+                />
               </View>
             );
           })}
@@ -230,7 +257,7 @@ const GuideScreen = () => {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#003340" },
 
-  scrollContent: { paddingHorizontal: 20 },
+  scrollContent: { paddingHorizontal: isTablet ? 30 : 20 },
 
   center: { justifyContent: "center", alignItems: "center" },
 
@@ -239,52 +266,52 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "rgba(255,255,255,0.06)",
-    borderRadius: 14,
-    padding: 12,
+    borderRadius: isTablet ? 18 : 14,
+    padding: isTablet ? 28 : 24,
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.08)",
-    marginBottom: 16,
+    marginTop: isTablet ? 25 : 20,
+    marginBottom: isTablet ? 20 : 16,
   },
   tutorialCardLeft: {
-    width: 44,
-    height: 44,
-    borderRadius: 10,
-    backgroundColor: "rgba(255,255,255,0.08)",
+    width: isTablet ? 70 : 60,
+    height: isTablet ? 70 : 60,
+    borderRadius: isTablet ? 12 : 10,
     alignItems: "center",
     justifyContent: "center",
   },
   tutorialTitle: {
     color: "#FFFFFF",
-    fontSize: 14.5,
+    fontSize: isTablet ? 18 : 16,
     fontWeight: "600",
     letterSpacing: 0.2,
   },
   tutorialDesc: {
     marginTop: 2,
     color: "rgba(255,255,255,0.7)",
-    fontSize: 12.5,
+    fontSize: isTablet ? 15 : 14,
   },
 
   title: {
     color: "#c6d4e1ff",
-    fontSize: 17,
-    marginBottom: 15,
+    fontSize: isTablet ? 20 : 18,
+    marginBottom: isTablet ? 18 : 15,
     fontWeight: "500",
     textAlign: "left",
     marginLeft: 4,
-    marginTop: 5,
+    marginTop: isTablet ? 18 : 15,
     letterSpacing: 0.2,
   },
 
   buttonContainer: {
-    gap: 12,
-    marginBottom: 10,
+    gap: isTablet ? 28 : 24,
+    marginBottom: isTablet ? 12 : 10,
   },
 
   examButton: {
     backgroundColor: "rgba(110, 230, 158, 0.15)",
-    borderRadius: 16,
-    padding: 20,
+    borderRadius: isTablet ? 20 : 16,
+    padding: isTablet ? 35 : 30,
     borderWidth: 1,
     borderColor: "rgba(110, 230, 158, 0.3)",
     shadowColor: "rgba(110, 230, 158, 0.4)",
@@ -296,8 +323,8 @@ const styles = StyleSheet.create({
 
   resultButton: {
     backgroundColor: "rgba(240, 116, 186, 0.15)",
-    borderRadius: 16,
-    padding: 20,
+    borderRadius: isTablet ? 20 : 16,
+    padding: isTablet ? 35 : 30,
     borderWidth: 1,
     borderColor: "rgba(240, 116, 186, 0.3)",
     shadowColor: "rgba(240, 116, 186, 0.4)",
@@ -314,77 +341,93 @@ const styles = StyleSheet.create({
   },
 
   examIconContainer: {
-    width: 80,
-    height: 75,
+    width: isTablet ? 110 : 100,
+    height: isTablet ? 100 : 90,
     backgroundColor: "rgba(110, 230, 158, 0.2)",
-    borderRadius: 16,
-    justifyContent: "flex-end",
+    borderRadius: isTablet ? 18 : 16,
+    justifyContent: "center",
     alignItems: "center",
   },
 
   resultIconContainer: {
-    width: 80,
-    height: 75,
+    width: isTablet ? 110 : 100,
+    height: isTablet ? 100 : 90,
     backgroundColor: "rgba(240, 116, 186, 0.2)",
-    borderRadius: 16,
-    justifyContent: "flex-end",
+    borderRadius: isTablet ? 18 : 16,
+    justifyContent: "center",
     alignItems: "center",
   },
 
   examTextContainer: {
     flex: 1,
-    marginLeft: 16,
-    marginRight: 12,
+    marginLeft: isTablet ? 20 : 16,
+    marginRight: isTablet ? 16 : 12,
   },
 
   examButtonTitle: {
     color: "#ffffff",
-    fontSize: 17,
+    fontSize: isTablet ? 20 : 18,
     fontWeight: "600",
-    marginBottom: 4,
+    marginBottom: isTablet ? 6 : 4,
     letterSpacing: 0.3,
   },
 
   examButtonSubtitle: {
     color: "rgba(255, 255, 255, 0.7)",
-    fontSize: 13,
+    fontSize: isTablet ? 15 : 14,
     fontWeight: "400",
-    lineHeight: 18,
+    lineHeight: isTablet ? 22 : 20,
   },
 
   divider: {
-    height: 1,
+    height: isTablet ? 1.5 : 1,
     backgroundColor: "rgba(255, 255, 255, 0.1)",
-    marginVertical: 25,
+    marginVertical: isTablet ? 30 : 25,
   },
 
-  menuContainer: { paddingBottom: 10 },
-  levelBlock: { marginBottom: 8 },
-  menuRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  menuContainer: { paddingBottom: isTablet ? 12 : 10 },
+  levelBlock: { marginBottom: isTablet ? 15 : 12 },
+  menuRow: { 
+    flexDirection: "row", 
+    justifyContent: "space-between", 
+    alignItems: "center" 
+  },
 
   clearButton: {
     backgroundColor: "rgba(255, 255, 255, 0.12)",
-    borderRadius: 12,
-    paddingVertical: 16,
-    paddingHorizontal: 18,
-    marginVertical: 6,
+    borderRadius: isTablet ? 16 : 12,
+    paddingVertical: isTablet ? 20 : 16,
+    paddingHorizontal: isTablet ? 22 : 18,
+    marginVertical: isTablet ? 8 : 6,
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.14)",
   },
   unclearButton: {
     backgroundColor: "rgba(255, 255, 255, 0.06)",
-    borderRadius: 12,
-    paddingVertical: 16,
-    paddingHorizontal: 18,
-    marginVertical: 6,
+    borderRadius: isTablet ? 16 : 12,
+    paddingVertical: isTablet ? 20 : 16,
+    paddingHorizontal: isTablet ? 22 : 18,
+    marginVertical: isTablet ? 8 : 6,
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.08)",
   },
 
   labelWithIcon: { flexDirection: "row", alignItems: "center" },
-  lockIcon: { marginLeft: 6, marginTop: 1 },
+  lockIcon: { 
+    marginLeft: isTablet ? 15 : 12, 
+    marginTop: 1 
+  },
 
-  menuText: { fontSize: 17, color: "#FFFFFF", fontWeight: "500", letterSpacing: 0.2 },
+  menuText: { 
+    fontSize: isTablet ? 19 : 17, 
+    color: "#FFFFFF", 
+    fontWeight: "500", 
+    letterSpacing: 0.2 
+  },
+
+  progressText: {
+    fontSize: isTablet ? 15 : 13,
+  },
 });
 
 export default GuideScreen;

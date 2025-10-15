@@ -217,16 +217,16 @@ const styles = StyleSheet.create({
   },
   backText: {
     color: "#EFF1F5",
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "bold",
   },
   searchInput: {
     flex: 1,
     backgroundColor: "#004455",
     borderRadius: 13,
-    padding: 12,
+    padding: 14,
     color: "#EFF1F5",
-    fontSize: 16,
+    fontSize: 17,
   },
   clearButton: {
     position: "absolute",
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
   },
   clearButtonText: {
     color: "#9ca3af",
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "bold",
   },
   loadingContainer: {
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
   },
   resultTitle: {
     color: "#F074BA",
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "600",
     marginBottom: 8,
     marginLeft: 4,
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 16,
+    padding: 18,
     borderBottomWidth: 1,
     borderBottomColor: "#004455",
     backgroundColor: "#002530",
@@ -272,12 +272,12 @@ const styles = StyleSheet.create({
   },
   itemName: {
     color: "#EFF1F5",
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: "500",
   },
   itemSymbol: {
     color: "#9ca3af",
-    fontSize: 14,
+    fontSize: 15,
   },
   noResultsContainer: {
     flex: 1,
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
   },
   noResultsText: {
     color: "#9ca3af",
-    fontSize: 16,
+    fontSize: 17,
   },
 });
 

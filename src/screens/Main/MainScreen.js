@@ -391,17 +391,6 @@ const MainScreen = ({ navigation }) => {
           innerRadius="70%"
         />
 
-        <View style={styles.centerInfo}>
-          <Text style={styles.centerInfoTitle}>총 자산</Text>
-          {assetData && assetData.total_asset ? (
-            <Text style={styles.centerInfoAmount}>
-              {formatCurrency(assetData.total_asset)}원
-            </Text>
-          ) : (
-            <Text style={styles.centerInfoAmount}>0원</Text>
-          )}
-        </View>
-
         <TouchableOpacity
           style={styles.detailButton}
           onPress={navigateToAssetDetail}
@@ -472,6 +461,20 @@ const MainScreen = ({ navigation }) => {
         </View>
       </View>
 
+      {/* 총 자산 정보를 그래프 아래로 이동 */}
+      <View style={styles.totalAssetInfoContainer}>
+        <View style={styles.totalAssetInfo}>
+          <Text style={styles.totalAssetLabel}>총 자산</Text>
+          {assetData && assetData.total_asset ? (
+            <Text style={styles.totalAssetAmount}>
+              {formatCurrency(assetData.total_asset)}원
+            </Text>
+          ) : (
+            <Text style={styles.totalAssetAmount}>0원</Text>
+          )}
+        </View>
+      </View>
+
       <TouchableOpacity
         style={styles.tradeButton}
         onPress={() => navigation.navigate("StockTrade")}
@@ -480,61 +483,61 @@ const MainScreen = ({ navigation }) => {
       </TouchableOpacity>
 
       <View style={styles.watchlistContainer}>
-  <Text style={styles.watchlistTitle}>나의 관심 주식</Text>
-  
-  {watchlistLoading ? (
-    <View style={styles.watchlistLoadingContainer}>
-      <ActivityIndicator size="large" color="#F074BA" />
-      <Text style={styles.watchlistLoadingText}>관심주식 로딩 중...</Text>
-    </View>
-  ) : watchlist.length > 0 ? (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      {watchlist.map((stock) => (
-        <TouchableOpacity
-          key={stock.id}
-          style={styles.stockItem}
-          onPress={() => handleStockPress(stock)}
-          activeOpacity={0.7}
-        >
-          <TouchableOpacity 
-            onPress={(e) => {
-              e.stopPropagation(); // 부모 터치 이벤트 방지
-              toggleFavorite(stock.symbol);
-            }}
-            style={styles.starTouchArea}
-          >
-            <Image
-              source={
-                stock.isFavorite
-                  ? require("../../assets/icons/star-filled.png")
-                  : require("../../assets/icons/star-empty.png")
-              }
-              style={styles.starIcon}
-            />
-          </TouchableOpacity>
-          <Text style={styles.stockName}>{stock.name}</Text>
-          <View style={styles.stockPriceContainer}>
-            <Text style={styles.stockPrice}>{stock.price}원</Text>
-            <Text 
-              style={[
-                styles.stockChange,
-                { color: getChangeColor(stock.changeStatus) }
-              ]}
-            >
-              {stock.change}%
+        <Text style={styles.watchlistTitle}>나의 관심 주식</Text>
+        
+        {watchlistLoading ? (
+          <View style={styles.watchlistLoadingContainer}>
+            <ActivityIndicator size="large" color="#F074BA" />
+            <Text style={styles.watchlistLoadingText}>관심주식 로딩 중...</Text>
+          </View>
+        ) : watchlist.length > 0 ? (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {watchlist.map((stock) => (
+              <TouchableOpacity
+                key={stock.id}
+                style={styles.stockItem}
+                onPress={() => handleStockPress(stock)}
+                activeOpacity={0.7}
+              >
+                <TouchableOpacity 
+                  onPress={(e) => {
+                    e.stopPropagation(); // 부모 터치 이벤트 방지
+                    toggleFavorite(stock.symbol);
+                  }}
+                  style={styles.starTouchArea}
+                >
+                  <Image
+                    source={
+                      stock.isFavorite
+                        ? require("../../assets/icons/star-filled.png")
+                        : require("../../assets/icons/star-empty.png")
+                    }
+                    style={styles.starIcon}
+                  />
+                </TouchableOpacity>
+                <Text style={styles.stockName}>{stock.name}</Text>
+                <View style={styles.stockPriceContainer}>
+                  <Text style={styles.stockPrice}>{stock.price}원</Text>
+                  <Text 
+                    style={[
+                      styles.stockChange,
+                      { color: getChangeColor(stock.changeStatus) }
+                    ]}
+                  >
+                    {stock.change}%
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        ) : (
+          <View style={styles.emptyWatchlist}>
+            <Text style={styles.emptyWatchlistText}>관심주식이 없습니다</Text>
+            <Text style={styles.emptyWatchlistSubText}>
+              검색창에서 주식을 찾아 관심주식으로 등록해보세요!
             </Text>
           </View>
-        </TouchableOpacity>
-      ))}
-    </ScrollView>
-  ) : (
-    <View style={styles.emptyWatchlist}>
-      <Text style={styles.emptyWatchlistText}>관심주식이 없습니다</Text>
-      <Text style={styles.emptyWatchlistSubText}>
-        검색창에서 주식을 찾아 관심주식으로 등록해보세요!
-      </Text>
-    </View>
-  )}
+        )}
       </View>
     </ScrollView>
   );
@@ -594,7 +597,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   graphContainer: {
-    height: screenWidth - 60,
+    height: screenWidth - 180,
     borderRadius: 8,
     marginTop: 10,
     alignItems: "center",
@@ -603,8 +606,8 @@ const styles = StyleSheet.create({
   },
   chartWrapper: {
     position: "relative",
-    width: screenWidth - 60,
-    height: screenWidth - 60,
+    width: screenWidth - 120,
+    height: screenWidth - 120,
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden",
@@ -617,29 +620,12 @@ const styles = StyleSheet.create({
   chart: {
     position: "absolute",
     top: 0,
-    left: 0,
-  },
-  centerInfo: {
-    position: "absolute",
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 10,
-  },
-  centerInfoTitle: {
-    color: "#003340",
-    fontSize: 18,
-    fontWeight: "800",
-  },
-  centerInfoAmount: {
-    color: "#003340",
-    fontSize: 26,
-    fontWeight: "bold",
-    marginTop: 4,
+    left: 20,
   },
   detailButton: {
     position: "absolute",
-    bottom: 10,
-    right: 10,
+    bottom: 50,
+    right: 0,
     backgroundColor: "#6366F1",
     width: 40,
     height: 40,
@@ -660,6 +646,31 @@ const styles = StyleSheet.create({
     color: "#EFF1F5",
     fontSize: 24,
     fontWeight: "bold",
+  },
+  // 총 자산 정보 컨테이너 (그래프 밖으로 이동)
+  totalAssetInfoContainer: {
+    alignItems: "flex-end",
+    marginBottom: 15,
+    marginTop: -10,
+  },
+  totalAssetInfo: {
+    //backgroundColor: "rgba(239, 241, 245, 0.1)", // UI 개선 제안: 배경색 추가로 가독성 향상
+    paddingHorizontal: 36,
+    paddingVertical: 10,
+    borderRadius: 12,
+    alignItems: "flex-end",
+  },
+  totalAssetLabel: {
+    color: "#EFF1F5",
+    fontSize: 14,
+    fontWeight: "600",
+    opacity: 0.8,
+  },
+  totalAssetAmount: {
+    color: "#F074BA",
+    fontSize: 24,
+    fontWeight: "bold",
+    marginTop: 4,
   },
   loadingContainer: {
     flex: 1,
@@ -727,12 +738,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: "center",
   },
-  
   starTouchArea: {
     padding: 8, // 터치 영역 확장
     marginRight: 2,
   },
-  
   starIcon: {
     width: 20,
     height: 20,
@@ -743,24 +752,24 @@ const styles = StyleSheet.create({
     padding: 5,
     borderBottomWidth: 1,
     borderBottomColor: "#004455",
+    // UI 개선 제안: 각 아이템에 paddingVertical을 좀 더 추가해서 터치 영역 확보 (예: paddingVertical: 12)
   },
   stockName: {
     flex: 1,
     color: "#EFF1F5",
     marginLeft: 10,
+    // UI 개선 제안: fontSize 명시적으로 추가 (예: fontSize: 15)
   },
   stockPriceContainer: {
     alignItems: "flex-end",
   },
   stockPrice: {
     color: "#EFF1F5",
+    // UI 개선 제안: fontSize와 fontWeight 명시적으로 추가 (예: fontSize: 15, fontWeight: "500")
   },
   stockChange: {
     fontWeight: "bold",
-  },
-  starIcon: {
-    width: 20,
-    height: 20,
+    // UI 개선 제안: fontSize 명시적으로 추가 (예: fontSize: 13)
   },
   emptyChart: {
     height: screenWidth - 60,
